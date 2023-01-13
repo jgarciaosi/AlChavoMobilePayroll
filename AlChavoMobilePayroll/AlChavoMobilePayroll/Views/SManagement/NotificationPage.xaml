@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives" x:Class="AlChavoMobilePayments.Views.SManagement.NotificationPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Frame" x:Key="PopupFrame">
+                <Setter Property="BackgroundColor" Value="White"></Setter>
+                <Setter Property="CornerRadius" Value="20"></Setter>
+                <Setter Property="Margin" Value="25,35,25,45"></Setter>
+            </Style>
+            <Style TargetType="Label" x:Key="PopupTitle">
+                <Setter Property="HorizontalOptions" Value="Center"></Setter>
+                <Setter Property="VerticalOptions" Value="Start" ></Setter>
+                <Setter Property="HorizontalTextAlignment" Value="Center"></Setter>
+                <Setter Property="TextColor" Value="{StaticResource AlChavoBlueTwo    }"></Setter>
+                <Setter Property="FontSize" Value="21"></Setter>
+                <Setter Property="FontAttributes" Value="Bold"></Setter>
+                <Setter Property="Margin" Value="0"></Setter>
+                <Setter Property="Padding" Value="0"></Setter>
+            </Style>
+            <Style TargetType="Label" x:Key="PopupDescription">
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"></Setter>
+                <Setter Property="HorizontalTextAlignment" Value="Center"></Setter>
+                <Setter Property="TextColor" Value="{StaticResource AlChavoBlue }"></Setter>
+                <Setter Property="FontSize" Value="18"></Setter>
+
+            </Style>
+            <Style TargetType="Button" x:Key="PopupCloseBtn">
+                <Setter Property="BackgroundColor" Value="Transparent"></Setter>
+                <Setter Property="HorizontalOptions" Value="End"></Setter>
+                <Setter Property="VerticalOptions" Value="End"></Setter>
+                <Setter Property="CornerRadius" Value="20"></Setter>
+                <Setter Property="FontSize" Value="16"></Setter>
+                <Setter Property="FontAttributes" Value="Bold"></Setter>
+                <Setter Property="TextColor" Value="{StaticResource AlChavoBlue}"></Setter>
+                <Setter Property="Padding" Value="5,0,5,0"></Setter>
+                <Setter Property="Margin" Value="0"></Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="Center">
+
+            <Frame Style="{StaticResource PopupFrame}">
+                <StackLayout HorizontalOptions="FillAndExpand" Margin="0">
+                   
+                    <StackLayout HorizontalOptions="FillAndExpand" Padding="0"  IsVisible="{Binding ShowCloseBnt}">
+                        <Button Style="{StaticResource PopupCloseBtn}" ImageSource="close_Icon.png" Command="{Binding CloseCommand}"></Button>
+                    </StackLayout>
+                  
+                    <StackLayout>
+                        <Label Style="{StaticResource PopupTitle}" Text="{Binding PopupTittle}"></Label>
+                    </StackLayout>
+
+                    <StackLayout VerticalOptions="Start" HorizontalOptions="CenterAndExpand">
+                        <Image IsVisible="{Binding PopupIsSuccess}" Margin="15" Source="success_icon.png" Aspect="AspectFit" HeightRequest="120"></Image>
+                        <Image IsVisible="{Binding PopupIsError}" Margin="15" Source="error_icon.png" Aspect="AspectFit" HeightRequest="120"></Image>
+                        <Image IsVisible="{Binding PopupIsAlert}" Margin="15" Source="warning_icon.png" Aspect="AspectFit" HeightRequest="120"></Image>
+                    </StackLayout>
+
+                    <StackLayout Margin="0,10,0,10">
+                        <Label Style="{StaticResource PopupDescription}" Text="{Binding PopupDescription}"></Label>
+                    </StackLayout>
+
+                    <StackLayout Margin="20">
+                        <Button Style="{StaticResource BlueBtn}" Text="{Binding PopupButtonText}" Command="{Binding GotoCommand}" Margin="15,0,15,0"></Button>
+                    </StackLayout>
+
+                </StackLayout>
+
+            </Frame>
+
+        </StackLayout>
+    </ContentPage.Content>
+</pages:PopupPage>

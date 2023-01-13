@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:behaviorsPack="clr-namespace:Xamarin.Forms.BehaviorsPack;assembly=Xamarin.Forms.BehaviorsPack" x:Class="AlChavoMobilePayroll.Views.User.UserIndex" BackgroundColor="{DynamicResource WindowBackgroundColor}" Title="{Binding Title}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <Color x:Key="LightRadioButtonColor">#F3F2F1</Color>
+            <Color x:Key="DarkRadioButtonColor">#9B9A99</Color>
+
+            <ControlTemplate x:Key="ThemeRadioTemplate">
+                <Frame Padding="0" BackgroundColor="{AppThemeBinding Dark={StaticResource DarkRadioButtonColor},  Light={StaticResource LightRadioButtonColor}}" BorderColor="{AppThemeBinding Dark={StaticResource DarkRadioButtonColor},    Light={StaticResource LightRadioButtonColor}}" CornerRadius="8" HasShadow="{OnPlatform iOS=false,Android=true}" HeightRequest="80" HorizontalOptions="Start" VerticalOptions="Start" WidthRequest="80">
+                    <Grid Margin="4" WidthRequest="80">
+                        <Grid HeightRequest="20" HorizontalOptions="End" VerticalOptions="Start" WidthRequest="20">
+                            <Ellipse x:Name="FillUncheck" Fill="White" HeightRequest="18" HorizontalOptions="Center" Stroke="#2E2545" StrokeThickness="2" VerticalOptions="Center" WidthRequest="18" />
+                            <Ellipse x:Name="FillCheck" Fill="White" HeightRequest="18" HorizontalOptions="Center" Stroke="#df6e57" StrokeThickness="2" VerticalOptions="Center" WidthRequest="18" />
+                            <Ellipse x:Name="Check" BackgroundColor="Transparent" Fill="#df6e57" HeightRequest="10" HorizontalOptions="Center" Stroke="#df6e57" StrokeThickness="0" VerticalOptions="Center" WidthRequest="10" />
+                        </Grid>
+                        <ContentPresenter />
+                    </Grid>
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroupList>
+                            <VisualStateGroup x:Name="CheckedStates">
+                                <VisualState x:Name="Checked">
+                                    <VisualState.Setters>
+                                        <Setter Property="BorderColor" Value="#df6e57" />
+                                        <Setter TargetName="Check" Property="Opacity" Value="1" />
+                                        <Setter TargetName="FillCheck" Property="Opacity" Value="1" />
+                                        <Setter TargetName="FillUncheck" Property="Opacity" Value="0" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Unchecked">
+                                    <VisualState.Setters>
+                                        <Setter Property="BorderColor" Value="#F3F2F1" />
+                                        <Setter TargetName="Check" Property="Opacity" Value="0" />
+                                        <Setter TargetName="FillCheck" Property="Opacity" Value="0" />
+                                        <Setter TargetName="FillUncheck" Property="Opacity" Value="1" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateGroupList>
+                    </VisualStateManager.VisualStateGroups>
+                </Frame>
+            </ControlTemplate>
+
+            <Style TargetType="RadioButton">
+                <Setter Property="ControlTemplate" Value="{StaticResource ThemeRadioTemplate}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Shell.TitleView>
+        <Grid Style="{StaticResource TitleViewGrid }" ColumnDefinitions="Auto,Auto" RowDefinitions="Auto">
+            <Label Grid.Column="2" Grid.Row="0" Style="{StaticResource HeaderTitleContent }" Text="{Binding Title}"></Label>
+            <ImageButton Grid.Column="2" Grid.Row="0" HorizontalOptions="End" Style="{StaticResource NavBarIcon}" x:Name="imgBtnLogo" Source="CompanyIcon.png" />
+        </Grid>
+    </Shell.TitleView>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Style="{StaticResource StackContent }" Orientation="Vertical">
+
+                <StackLayout Margin="10,15,10,15" HorizontalOptions="FillAndExpand">
+                    <Label TextColor="{StaticResource AlChavoBlue }" Text="{Binding name}" FontSize="18" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" VerticalOptions="CenterAndExpand" />
+                    <Label TextColor="{StaticResource AlChavoBlue }" Text="{Binding email}" FontSize="16" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
+                </StackLayout>
+
+                <Frame Style="{StaticResource FrmBasic }">
+                    <StackLayout Padding="5" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoToUserDetailCommand}" />
+                        </StackLayout.GestureRecognizers>
+                        <Label Text="Personal Information" FontSize="18" />
+                    </StackLayout>
+                </Frame>
+
+                <Frame Style="{StaticResource FrmBasic }">
+                    <StackLayout Padding="5" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoToCompanyDetailCommand}" />
+                        </StackLayout.GestureRecognizers>
+                        <Label Text="Company Information" FontSize="18" />
+                    </StackLayout>
+                </Frame>
+
+                <Frame Style="{StaticResource FrmBasic}" Margin="45,15,45,15">
+                    <StackLayout HorizontalOptions="FillAndExpand">
+                        <Label Margin="0,6,0,6" Text="Change Theme" HorizontalOptions="CenterAndExpand" />
+                        <Grid ColumnDefinitions="*,*,*" RowDefinitions="*" RadioButtonGroup.GroupName="ThemeGroup" HorizontalOptions="FillAndExpand">
+                            <RadioButton x:Name="RadioButtonSystem" Grid.Column="0" IsChecked="{Binding DefaultTheme}" Value="System">
+                                <RadioButton.Behaviors>
+                                    <behaviorsPack:EventToCommandBehavior EventName="CheckedChanged" Command="{Binding SelectedMethodCommand }" CommandParameter="{Reference RadioButtonSystem}" />
+                                </RadioButton.Behaviors>
+                                <RadioButton.Content>
+                                    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                        <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                            <Image Source="setting_icon.png" Aspect="AspectFit"></Image>
+                                            <Label FontSize="Small" Text="System" TextColor="#323130" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                </RadioButton.Content>
+                            </RadioButton>
+                            <RadioButton x:Name="RadioButtonLight" Grid.Column="1" IsChecked="{Binding LightTheme}" Value="Light">
+                                <RadioButton.Behaviors>
+                                    <behaviorsPack:EventToCommandBehavior EventName="CheckedChanged" Command="{Binding SelectedMethodCommand }" CommandParameter="{Reference RadioButtonLight}" />
+                                </RadioButton.Behaviors>
+                                <RadioButton.Content>
+                                    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                        <Image Source="moon_icon.png" Aspect="AspectFit"></Image>
+                                        <Label FontSize="Small" Text="Light" TextColor="#323130" />
+                                    </StackLayout>
+                                </RadioButton.Content>
+                            </RadioButton>
+                            <RadioButton x:Name="RadioButtonDark" Grid.Column="2" IsChecked="{Binding DarkTheme}" Value="Dark">
+                                <RadioButton.Behaviors>
+                                    <behaviorsPack:EventToCommandBehavior EventName="CheckedChanged" Command="{Binding SelectedMethodCommand }" CommandParameter="{Reference RadioButtonDark}" />
+                                </RadioButton.Behaviors>
+                                <RadioButton.Content>
+                                    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                        <Image Source="sun_icon.png" Aspect="AspectFit"></Image>
+                                        <Label FontSize="Small" Text="Dark" TextColor="#323130" />
+                                    </StackLayout>
+                                </RadioButton.Content>
+                            </RadioButton>
+                        </Grid>
+                    </StackLayout>
+                </Frame>
+
+
+
+                <Button Text="Log Out" CornerRadius="15" BorderColor="{StaticResource AlChavoBlue }" Margin="4,9,4,4" BorderWidth="1" ContentLayout="top" ImageSource="log_out_icon.png" BackgroundColor="Transparent" TextColor="Gray" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" HeightRequest="90" Command="{Binding GoToLoginCommand}" />
+
+
+
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

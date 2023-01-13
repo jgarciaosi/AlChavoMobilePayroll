@@ -1,0 +1,374 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="AlChavoMobilePayroll.Views.CheckRegister.CheckRegisterDetail" xmlns:listView="clr-namespace:Telerik.XamarinForms.DataControls.ListView;assembly=Telerik.XamarinForms.DataControls" xmlns:extensions="http://xamarin.com/schemas/2020/toolkit" xmlns:chart="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms" xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives" xmlns:telerikDataControls="clr-namespace:Telerik.XamarinForms.DataControls;assembly=Telerik.XamarinForms.DataControls" xmlns:converters="clr-namespace:AlChavoMobilePayroll.ExtensionMethods" Shell.TabBarIsVisible="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label" x:Key="LblValues">
+                <Setter Property="HorizontalOptions" Value="EndAndExpand"></Setter>
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"></Setter>
+                <Setter Property="FontSize" Value="18"></Setter>
+                <Setter Property="FontAttributes" Value="Bold"></Setter>
+            </Style>
+            <Style TargetType="Label" x:Key="ExpanderHdr">
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"></Setter>
+                <Setter Property="FontAttributes" Value="Bold"></Setter>
+                <Setter Property="FontSize" Value="16"></Setter>
+                <Setter Property="Padding" Value="0,9"></Setter>
+            </Style>
+            <Style TargetType="Label" x:Key="ExpanderHdrAmt">
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"></Setter>
+                <Setter Property="HorizontalOptions" Value="End"></Setter>
+                <Setter Property="FontAttributes" Value="Bold"></Setter>
+                <Setter Property="FontSize" Value="16"></Setter>
+                <Setter Property="Padding" Value="9"></Setter>
+            </Style>
+            <Style TargetType="Label" x:Key="ExpanderDtl">
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"></Setter>
+                <Setter Property="FontAttributes" Value="Bold"></Setter>
+                <Setter Property="FontSize" Value="16"></Setter>
+                <Setter Property="Padding" Value="0,9"></Setter>
+                <Setter Property="Margin" Value="20,0"></Setter>
+            </Style>
+            <Style TargetType="Label" x:Key="ExpanderDtlAmt">
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"></Setter>
+                <Setter Property="HorizontalOptions" Value="End"></Setter>
+                <Setter Property="FontAttributes" Value="Bold"></Setter>
+                <Setter Property="FontSize" Value="16"></Setter>
+                <Setter Property="Padding" Value="9"></Setter>
+                <Setter Property="Margin" Value="8,0"></Setter>
+            </Style>
+            <Style TargetType="Image" x:Key="ExpanderHdrImg">
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"></Setter>
+                <Setter Property="Source" Value="circle_dot.png"></Setter>
+            </Style>
+
+            <DataTemplate x:Key="ListViewItemTemplateCurrentCheck">
+                <listView:ListViewTemplateCell>
+                    <listView:ListViewTemplateCell.View>
+                        <Grid Margin="16">
+
+                        </Grid>
+                    </listView:ListViewTemplateCell.View>
+                </listView:ListViewTemplateCell>
+            </DataTemplate>
+            <DataTemplate x:Key="ListViewItemTemplateYTDCheck">
+                <listView:ListViewTemplateCell>
+                    <listView:ListViewTemplateCell.View>
+
+                        <Label FontAttributes="Bold" TextColor="Black" Text="Anything" />
+
+                    </listView:ListViewTemplateCell.View>
+                </listView:ListViewTemplateCell>
+            </DataTemplate>
+        </ResourceDictionary>
+        <converters:IndexToColorConverter x:Key="IndexToColorConverterGrid" EvenColor="#0D92DB" OddColor="White" />
+
+        <converters:IndexToColorConverter x:Key="IndexToColorConverterText" EvenColor="White" OddColor="Black" />
+    </ContentPage.Resources>
+
+    <Shell.TitleView>
+        <Grid Style="{StaticResource TitleViewGrid }" ColumnDefinitions="Auto,Auto" RowDefinitions="Auto">
+            <Label Grid.Column="2" Grid.Row="0" Style="{StaticResource HeaderTitleContent }" Text="{Binding Title}"></Label>
+            <ImageButton Grid.Column="2" Grid.Row="0" HorizontalOptions="End" Style="{StaticResource NavBarIcon}" x:Name="imgBtnLogo" Source="CompanyIcon.png" />
+        </Grid>
+    </Shell.TitleView>
+
+    <StackLayout Style="{StaticResource StackContent }" Padding="15" >
+
+        <StackLayout Orientation="Horizontal">
+            <Label Text="{Binding checkRegisterDetailResponse.CheckDate, StringFormat='{0:MMMM dd, yyyy}'}" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center" />
+            <Button Style="{StaticResource BlueBtn }" WidthRequest="109" Padding="10,0" HorizontalOptions="EndAndExpand" CornerRadius="10" ContentLayout="Left,7" Command="{Binding GoToCheckRegisterReportCommand}" Text="{Binding checkRegisterDetailResponse.CheckNumber}" ImageSource="add_bill_plus_white_icon.png" />
+        </StackLayout>
+
+        <StackLayout Style="{StaticResource StackContent }">
+            <telerikPrimitives:RadTabView VerticalOptions="FillAndExpand">
+                <telerikPrimitives:RadTabView.Items>
+                    <telerikPrimitives:TabViewItem HeaderText="{Binding currentCheckTitle}">
+                        <telerikPrimitives:TabViewItem.Content>
+                            <ScrollView >
+                                <StackLayout>
+                                    <chart:SfChart WidthRequest="450" HeightRequest="350">
+                                        <!--Current Check-->
+                                        <chart:SfChart.Series>
+                                            <chart:DoughnutSeries ItemsSource="{Binding checkRegisterDetailResponse.CheckPieData}" XBindingPath="TitlePie" YBindingPath="ValuePie" LegendIcon="Circle" EnableAnimation="true" StrokeWidth="1" StrokeColor="White" ExplodeOnTouch="False" EnableDataPointSelection="False">
+                                                <chart:DoughnutSeries.DataMarker>
+                                                    <chart:ChartDataMarker ShowLabel="True">
+                                                        <chart:ChartDataMarker.LabelStyle>
+                                                            <chart:DataMarkerLabelStyle LabelFormat="##'%'" />
+                                                        </chart:ChartDataMarker.LabelStyle>
+                                                    </chart:ChartDataMarker>
+                                                </chart:DoughnutSeries.DataMarker>
+                                                <chart:DoughnutSeries.ColorModel>
+                                                    <chart:ChartColorModel Palette="Custom" CustomBrushes="{StaticResource Colors}" />
+                                                </chart:DoughnutSeries.ColorModel>
+                                                <chart:DoughnutSeries.CenterView>
+                                                    <StackLayout x:Name="stack" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                                        <Label Text="Gross Pay" FontSize="12" FontFamily="Helvetica" HorizontalTextAlignment="Center" />
+                                                        <Label Text="{Binding BindingContext.checkRegisterDetailResponse.Gross, StringFormat='{0:C}'}" FontAttributes="Bold" FontSize="12" FontFamily="Helvetica" HorizontalTextAlignment="Center" />
+                                                    </StackLayout>
+                                                </chart:DoughnutSeries.CenterView>
+                                            </chart:DoughnutSeries>
+                                        </chart:SfChart.Series>
+                                    </chart:SfChart>
+                                    <!--Detail del Check Register-->
+                                    <telerikPrimitives:RadExpander>
+                                        <telerikPrimitives:RadExpander.Header>
+                                            <telerikPrimitives:ExpanderHeader HeightRequest="44">
+                                                <Grid ColumnDefinitions="5*,5*" RowDefinitions="Auto">
+                                                    <Label Grid.Column="0" Grid.Row="0" Style="{StaticResource ExpanderHdr }" Text="Total Gross" />
+                                                    <Label Grid.Column="1" Grid.Row="0" Style="{StaticResource ExpanderHdrAmt }" Text="{Binding checkRegisterDetailResponse.Gross, StringFormat='{0:C}'}" />
+                                                </Grid>
+                                            </telerikPrimitives:ExpanderHeader>
+                                        </telerikPrimitives:RadExpander.Header>
+                                        <telerikPrimitives:RadExpander.Content>
+                                            <StackLayout BindableLayout.ItemsSource="{Binding currentGrossCheckList}">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid ColumnDefinitions="6*,4*" RowDefinitions="Auto">
+                                                            <Label Grid.Column="0" Style="{StaticResource ExpanderDtl }" Text="{Binding EarningId}"></Label>
+                                                            <Label Grid.Column="1" Style="{StaticResource ExpanderDtlAmt }" Text="{Binding SalWages, StringFormat='{0:C}'}"></Label>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </StackLayout>
+                                        </telerikPrimitives:RadExpander.Content>
+                                    </telerikPrimitives:RadExpander>
+
+                                    <telerikPrimitives:RadExpander>
+                                        <telerikPrimitives:RadExpander.Header>
+                                            <telerikPrimitives:ExpanderHeader HeightRequest="44">
+                                                <Grid ColumnDefinitions="1*,5*,4*" RowDefinitions="Auto">
+                                                    <StackLayout Grid.Column="0" Grid.Row="0" Padding="9">
+                                                        <Image Style="{StaticResource ExpanderHdrImg }" extensions:IconTintColorEffect.TintColor="#FE1835"></Image>
+                                                    </StackLayout>
+                                                    <Label Grid.Column="1" Grid.Row="0" Style="{StaticResource ExpanderHdr }" Text="Taxes" />
+                                                    <Label Grid.Column="2" Grid.Row="0" Style="{StaticResource ExpanderHdrAmt }" Text="{Binding checkRegisterDetailResponse.TaxesAmount, StringFormat='{0:C}'}" />
+                                                </Grid>
+                                            </telerikPrimitives:ExpanderHeader>
+                                        </telerikPrimitives:RadExpander.Header>
+                                        <telerikPrimitives:RadExpander.Content>
+                                            <StackLayout BindableLayout.ItemsSource="{Binding currentCheckTaxesList}">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid ColumnDefinitions="6*,4*" RowDefinitions="Auto">
+                                                            <Label Grid.Column="0" Style="{StaticResource ExpanderDtl }" Text="{Binding StateTaxDscr}"></Label>
+                                                            <Label Grid.Column="1" Style="{StaticResource ExpanderDtlAmt }" Text="{Binding StateTaxAmt, StringFormat='{0:C}'}"></Label>
+                                                        </Grid>
+
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </StackLayout>
+                                        </telerikPrimitives:RadExpander.Content>
+                                    </telerikPrimitives:RadExpander>
+
+                                    <telerikPrimitives:RadExpander>
+                                        <telerikPrimitives:RadExpander.Header>
+                                            <telerikPrimitives:ExpanderHeader HeightRequest="44">
+                                                <Grid ColumnDefinitions="1*,5*,4*" RowDefinitions="Auto">
+                                                    <StackLayout Grid.Column="0" Grid.Row="0" Padding="9">
+                                                        <Image Style="{StaticResource ExpanderHdrImg }" extensions:IconTintColorEffect.TintColor="#2EC9FF"></Image>
+                                                    </StackLayout>
+                                                    <Label Grid.Column="1" Grid.Row="0" Style="{StaticResource ExpanderHdr }" Text="Other Withholding" />
+                                                    <Label Grid.Column="2" Grid.Row="0" Style="{StaticResource ExpanderHdrAmt }" Text="{Binding checkRegisterDetailResponse.OtherVolWithholdAmt, StringFormat='{0:C}'}" />
+                                                </Grid>
+                                            </telerikPrimitives:ExpanderHeader>
+                                        </telerikPrimitives:RadExpander.Header>
+                                        <telerikPrimitives:RadExpander.Content>
+                                            <StackLayout BindableLayout.ItemsSource="{Binding currentOtherVolCheckList}">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid ColumnDefinitions="6*,4*" RowDefinitions="Auto">
+                                                            <Label Grid.Column="0" Style="{StaticResource ExpanderDtl }" Text="{Binding OtherVolWithholdDesc}"></Label>
+                                                            <Label Grid.Column="1" Style="{StaticResource ExpanderDtlAmt }" Text="{Binding OtherVol, StringFormat='{0:C}'}"></Label>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </StackLayout>
+                                        </telerikPrimitives:RadExpander.Content>
+                                    </telerikPrimitives:RadExpander>
+
+                                    <telerikPrimitives:RadExpander>
+                                        <telerikPrimitives:RadExpander.Header>
+                                            <telerikPrimitives:ExpanderHeader HeightRequest="44">
+                                                <Grid ColumnDefinitions="1*,5*,4*" RowDefinitions="Auto">
+                                                    <StackLayout Grid.Column="0" Grid.Row="0" Padding="9">
+                                                        <Image Style="{StaticResource ExpanderHdrImg }" extensions:IconTintColorEffect.TintColor="#3abf5a"></Image>
+                                                    </StackLayout>
+                                                    <Label Grid.Column="1" Grid.Row="0" Style="{StaticResource ExpanderHdr }" Text="Net Pay" />
+                                                    <Label Grid.Column="2" Grid.Row="0" Style="{StaticResource ExpanderHdrAmt }" Text="{Binding checkRegisterDetailResponse.Net, StringFormat='{0:C}'}" />
+                                                </Grid>
+                                            </telerikPrimitives:ExpanderHeader>
+                                        </telerikPrimitives:RadExpander.Header>
+                                        <telerikPrimitives:RadExpander.Content>
+                                            <StackLayout BindableLayout.ItemsSource="{Binding currentAndYtdCheckTotalsList}">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid ColumnDefinitions="6*,4*" RowDefinitions="Auto">
+                                                            <Label Grid.Column="0" Grid.Row="0" Style="{StaticResource ExpanderDtl }" Text="Gross"></Label>
+                                                            <Label Grid.Column="1" Grid.Row="0" Style="{StaticResource ExpanderDtlAmt }" Text="{Binding Gross, StringFormat='{0:C}'}"></Label>
+
+                                                            <Label Grid.Column="0" Grid.Row="1" Style="{StaticResource ExpanderDtl }" Text="Current Deductions"></Label>
+                                                            <Label Grid.Column="1" Grid.Row="1" Style="{StaticResource ExpanderDtlAmt }" Text="{Binding CurrenDeductions, StringFormat='{0:C}'}"></Label>
+
+                                                            <Label Grid.Column="0" Grid.Row="2" Style="{StaticResource ExpanderDtl }" Text="Net"></Label>
+                                                            <Label Grid.Column="1" Grid.Row="2" Style="{StaticResource ExpanderDtlAmt }" Text="{Binding Net, StringFormat='{0:C}'}"></Label>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </StackLayout>
+                                        </telerikPrimitives:RadExpander.Content>
+                                    </telerikPrimitives:RadExpander>
+                                </StackLayout>
+                            </ScrollView>
+                        </telerikPrimitives:TabViewItem.Content>
+                    </telerikPrimitives:TabViewItem>
+
+                    <telerikPrimitives:TabViewItem HeaderText="{Binding ytdCheckTitle}">
+                        <telerikPrimitives:TabViewItem.Content>
+                            <!--YTD Check-->
+                            <ScrollView>
+                                <StackLayout>
+                                    <chart:SfChart WidthRequest="450" HeightRequest="350">
+                                        <!--Current Check-->
+                                        <chart:SfChart.Series>
+                                            <chart:DoughnutSeries ItemsSource="{Binding checkRegisterDetailResponseYTD.CheckPieData}" XBindingPath="TitlePie" YBindingPath="ValuePie" LegendIcon="Circle" EnableAnimation="true" StrokeWidth="1" StrokeColor="White" ExplodeOnTouch="False" EnableDataPointSelection="False">
+                                                <chart:DoughnutSeries.DataMarker>
+                                                    <chart:ChartDataMarker ShowLabel="True">
+                                                        <chart:ChartDataMarker.LabelStyle>
+                                                            <chart:DataMarkerLabelStyle LabelFormat="##'%'" />
+                                                        </chart:ChartDataMarker.LabelStyle>
+                                                    </chart:ChartDataMarker>
+                                                </chart:DoughnutSeries.DataMarker>
+                                                <chart:DoughnutSeries.ColorModel>
+                                                    <chart:ChartColorModel Palette="Custom" CustomBrushes="{StaticResource Colors}" />
+                                                </chart:DoughnutSeries.ColorModel>
+                                                <chart:DoughnutSeries.CenterView>
+                                                    <StackLayout x:Name="stackGross" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                                        <Label Text="Gross Pay" FontSize="12" FontFamily="Helvetica" HorizontalTextAlignment="Center" />
+                                                        <Label Text="{Binding BindingContext.checkRegisterDetailResponseYTD.Gross, StringFormat='{0:C}'}" FontAttributes="Bold" FontSize="12" FontFamily="Helvetica" HorizontalTextAlignment="Center" />
+                                                    </StackLayout>
+                                                </chart:DoughnutSeries.CenterView>
+                                            </chart:DoughnutSeries>
+                                        </chart:SfChart.Series>
+
+                                    </chart:SfChart>
+                                    <!--Detail de los YTD-->
+
+                                    <telerikPrimitives:RadExpander>
+                                        <telerikPrimitives:RadExpander.Header>
+                                            <telerikPrimitives:ExpanderHeader HeightRequest="44">
+                                                <Grid ColumnDefinitions="5*,5*" RowDefinitions="Auto">
+                                                    <Label Grid.Column="0" Grid.Row="0" Style="{StaticResource ExpanderHdr }" Text="Total Gross" />
+                                                    <Label Grid.Column="1" Grid.Row="0" Style="{StaticResource ExpanderHdrAmt }" Text="{Binding checkRegisterDetailResponseYTD.Gross, StringFormat='{0:C}'}" />
+                                                </Grid>
+                                            </telerikPrimitives:ExpanderHeader>
+                                        </telerikPrimitives:RadExpander.Header>
+                                        <telerikPrimitives:RadExpander.Content>
+                                            <StackLayout BindableLayout.ItemsSource="{Binding ytdGrossCheckList}">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid ColumnDefinitions="6*,4*" RowDefinitions="Auto">
+                                                            <Label Grid.Column="0" Style="{StaticResource ExpanderDtl }" Text="{Binding EarningId}"></Label>
+                                                            <Label Grid.Column="1" Style="{StaticResource ExpanderDtlAmt }" Text="{Binding SalWages, StringFormat='{0:C}'}"></Label>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </StackLayout>
+                                        </telerikPrimitives:RadExpander.Content>
+                                    </telerikPrimitives:RadExpander>
+
+                                    <telerikPrimitives:RadExpander>
+                                        <telerikPrimitives:RadExpander.Header>
+                                            <telerikPrimitives:ExpanderHeader HeightRequest="44">
+                                                <Grid ColumnDefinitions="1*,5*,4*" RowDefinitions="Auto">
+                                                    <StackLayout Grid.Column="0" Grid.Row="0" Padding="9">
+                                                        <Image Style="{StaticResource ExpanderHdrImg }" extensions:IconTintColorEffect.TintColor="#FE1835"></Image>
+                                                    </StackLayout>
+                                                    <Label Grid.Column="1" Grid.Row="0" Style="{StaticResource ExpanderHdr }" Text="Taxes" />
+                                                    <Label Grid.Column="2" Grid.Row="0" Style="{StaticResource ExpanderHdrAmt }" Text="{Binding checkRegisterDetailResponseYTD.TaxesAmount, StringFormat='{0:C}'}" />
+                                                </Grid>
+                                            </telerikPrimitives:ExpanderHeader>
+                                        </telerikPrimitives:RadExpander.Header>
+                                        <telerikPrimitives:RadExpander.Content>
+                                            <StackLayout BindableLayout.ItemsSource="{Binding ytdCheckTaxesList}">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid ColumnDefinitions="6*,4*" RowDefinitions="Auto">
+                                                            <Label Grid.Column="0" Style="{StaticResource ExpanderDtl }" Text="{Binding StateTaxDscr}"></Label>
+                                                            <Label Grid.Column="1" Style="{StaticResource ExpanderDtlAmt }" Text="{Binding StateTaxAmt, StringFormat='{0:C}'}"></Label>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </StackLayout>
+                                        </telerikPrimitives:RadExpander.Content>
+                                    </telerikPrimitives:RadExpander>
+
+                                    <telerikPrimitives:RadExpander>
+                                        <telerikPrimitives:RadExpander.Header>
+                                            <telerikPrimitives:ExpanderHeader HeightRequest="44">
+                                                <Grid ColumnDefinitions="1*,5*,4*" RowDefinitions="Auto">
+                                                    <StackLayout Grid.Column="0" Grid.Row="0" Padding="9">
+                                                        <Image Style="{StaticResource ExpanderHdrImg }" extensions:IconTintColorEffect.TintColor="#2EC9FF"></Image>
+                                                    </StackLayout>
+                                                    <Label Grid.Column="1" Grid.Row="0" Style="{StaticResource ExpanderHdr }" Text="Other Withholding" />
+                                                    <Label Grid.Column="2" Grid.Row="0" Style="{StaticResource ExpanderHdrAmt }" Text="{Binding checkRegisterDetailResponseYTD.OtherVolWithholdAmt, StringFormat='{0:C}'}" />
+                                                </Grid>
+                                            </telerikPrimitives:ExpanderHeader>
+                                        </telerikPrimitives:RadExpander.Header>
+                                        <telerikPrimitives:RadExpander.Content>
+                                            <StackLayout BindableLayout.ItemsSource="{Binding ytdOtherVolCheckList}">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid ColumnDefinitions="6*,4*" RowDefinitions="Auto">
+                                                            <Label Grid.Column="0" Style="{StaticResource ExpanderDtl }" Text="{Binding OtherVolWithholdDesc}"></Label>
+                                                            <Label Grid.Column="1" Style="{StaticResource ExpanderDtlAmt }" Text="{Binding OtherVol, StringFormat='{0:C}'}"></Label>
+                                                        </Grid>
+
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </StackLayout>
+                                        </telerikPrimitives:RadExpander.Content>
+                                    </telerikPrimitives:RadExpander>
+
+                                    <telerikPrimitives:RadExpander>
+                                        <telerikPrimitives:RadExpander.Header>
+                                            <telerikPrimitives:ExpanderHeader HeightRequest="44">
+                                                <Grid ColumnDefinitions="1*,5*,4*" RowDefinitions="Auto">
+                                                    <StackLayout Grid.Column="0" Grid.Row="0" Padding="9">
+                                                        <Image Style="{StaticResource ExpanderHdrImg }" extensions:IconTintColorEffect.TintColor="#3abf5a"></Image>
+                                                    </StackLayout>
+                                                    <Label Grid.Column="1" Grid.Row="0" Style="{StaticResource ExpanderHdr }" Text="Net Pay" />
+                                                    <Label Grid.Column="2" Grid.Row="0" Style="{StaticResource ExpanderHdrAmt }" Text="{Binding checkRegisterDetailResponseYTD.Net, StringFormat='{0:C}'}" />
+                                                </Grid>
+                                            </telerikPrimitives:ExpanderHeader>
+                                        </telerikPrimitives:RadExpander.Header>
+                                        <telerikPrimitives:RadExpander.Content>
+                                            <StackLayout BindableLayout.ItemsSource="{Binding currentAndYtdCheckTotalsList}">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid ColumnDefinitions="6*,4*" RowDefinitions="Auto">
+                                                            <Label Grid.Column="0" Grid.Row="0" Style="{StaticResource ExpanderDtl }" Text="YTD Gross"></Label>
+                                                            <Label Grid.Column="1" Grid.Row="0" Style="{StaticResource ExpanderDtlAmt }" Text="{Binding YTDGross, StringFormat='{0:C}'}"></Label>
+
+                                                            <Label Grid.Column="0" Grid.Row="1" Style="{StaticResource ExpanderDtl }" Text="YTD Deductions"></Label>
+                                                            <Label Grid.Column="1" Grid.Row="1" Style="{StaticResource ExpanderDtlAmt }" Text="{Binding YTDDed, StringFormat='{0:C}'}"></Label>
+
+                                                            <Label Grid.Column="0" Grid.Row="2" Style="{StaticResource ExpanderDtl }" Text="YTD Net"></Label>
+                                                            <Label Grid.Column="1" Grid.Row="2" Style="{StaticResource ExpanderDtlAmt }" Text="{Binding YTDEarn, StringFormat='{0:C}'}"></Label>
+
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </StackLayout>
+                                        </telerikPrimitives:RadExpander.Content>
+                                    </telerikPrimitives:RadExpander>
+                                </StackLayout>
+                            </ScrollView>
+                        </telerikPrimitives:TabViewItem.Content>
+                    </telerikPrimitives:TabViewItem>
+                </telerikPrimitives:RadTabView.Items>
+            </telerikPrimitives:RadTabView>
+        </StackLayout>
+
+    </StackLayout>
+
+</ContentPage>

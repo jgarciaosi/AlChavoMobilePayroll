@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AlChavoMobilePayroll.Views.SManagement.Login"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:behaviorsPack="clr-namespace:Xamarin.Forms.BehaviorsPack;assembly=Xamarin.Forms.BehaviorsPack" xmlns:local="clr-namespace:AlChavoMobilePayments.ExtensionMethods"
+             Shell.FlyoutBehavior="Disabled" Shell.TabBarIsVisible="False" Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Frame" x:Key="EntryFrame">
+                <Setter Property="CornerRadius" Value="10"></Setter>
+                <Setter Property="BorderColor" Value="Gray"></Setter>
+                <Setter Property="Padding" Value="5,1,5,0"></Setter>
+            </Style>
+
+            <Style TargetType="Entry" x:Key="LoginEntry">
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" ></Setter>
+                <Setter Property="FontSize" Value="Medium"></Setter>
+                <Setter Property="HorizontalTextAlignment" Value="Start"></Setter>
+                <Setter Property="Margin" Value="0"></Setter>
+                <Setter Property="PlaceholderColor" Value="{StaticResource SystemGray2}"   ></Setter>
+            </Style>
+
+            <Style TargetType="Image" x:Key="ImgEntry">
+                <Setter Property="HorizontalOptions" Value="Start"></Setter>
+                <Setter Property="Margin" Value="5,5,0,5"></Setter>
+                <Setter Property="HeightRequest" Value="27"></Setter>
+                <Setter Property="xct:IconTintColorEffect.TintColor" Value="{StaticResource AlChavoBlueTwo  }" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <ScrollView>
+           
+                <StackLayout Style="{StaticResource StackContent }">
+                
+                <StackLayout Margin="45,95,45,0">
+
+                    <StackLayout Margin="10,5,10,20">
+                        <Image Source="logoAlchavoPayroll.png" Margin="0"></Image>
+                    </StackLayout>
+                    <!--<StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
+                        <Image Source="logoAlchavoNew.png" Margin="0"></Image>
+                        <Line X1="220" X2="0" Y1="0"  Y2="0" StrokeThickness="4" Stroke="{StaticResource AlchavoBlueLine }" /> 
+                        <Label HorizontalOptions="FillAndExpand" FontFamily="Arial" TextColor="{StaticResource AlchavoBlueTitle}" FontSize="Large" FontAttributes="Bold" HorizontalTextAlignment="End" Text="Payroll" />
+                    </StackLayout>-->
+
+                    <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Padding="5,35,5,0">
+
+                        <!--<Label HorizontalOptions="FillAndExpand" FontSize="Medium" FontAttributes="Bold" Text="User" />
+                        <Entry HorizontalOptions="FillAndExpand" FontSize="Medium" x:Name="UserName" Text="{Binding AuthUser.UserName}" HorizontalTextAlignment="Start" Placeholder="user@mail.com" />
+
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Margin="0,0,0,12">
+                            <Label HorizontalOptions="StartAndExpand" FontSize="18" Text="Remember User" />
+                            <Switch HorizontalOptions="EndAndExpand" IsToggled="{Binding RememberUser }">
+                                <Switch.Behaviors>
+                                    <behaviorsPack:EventToCommandBehavior EventName="Toggled" EventArgsPropertyPath="Value" />
+                                </Switch.Behaviors>
+                            </Switch>
+                        </StackLayout>-->
+                        <Label IsVisible="false" HorizontalOptions="FillAndExpand" FontSize="Medium" FontAttributes="Bold" Text="User" />
+                        <StackLayout Orientation="Horizontal">
+                            <Image Style="{StaticResource ImgEntry}" Source="account3.png"></Image>
+                            <Entry Style="{StaticResource LoginEntry}" x:Name="UserName" Text="{Binding AuthUser.UserName}" Placeholder="User Name" Keyboard="Email" HorizontalOptions="FillAndExpand" >
+                                <Entry.Behaviors>
+                                    <xct:EmailValidationBehavior DecorationFlags="Trim" InvalidStyle="{StaticResource InvalidEntryStyle}" />
+                                </Entry.Behaviors>
+                            </Entry>
+                        </StackLayout>
+
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Margin="0,0,0,12">
+                            <Label HorizontalOptions="StartAndExpand" FontSize="18" Text="Remember User?" />
+                            <Switch HorizontalOptions="EndAndExpand" IsToggled="{Binding RememberUser }">
+                                <Switch.Behaviors>
+                                    <behaviorsPack:EventToCommandBehavior EventName="Toggled" EventArgsPropertyPath="Value" />
+                                </Switch.Behaviors>
+                            </Switch>
+                        </StackLayout>
+
+                        <Label HorizontalOptions="FillAndExpand" IsVisible="false" FontSize="Medium" FontAttributes="Bold" Text="Password" />
+                        <!--<Entry HorizontalOptions="FillAndExpand" FontSize="Medium" IsPassword="True" x:Name="Password" Text="{Binding AuthUser.Password}" HorizontalTextAlignment="Start" />-->
+                        <StackLayout Orientation="Horizontal">
+                            <Image Style="{StaticResource ImgEntry}" Source="PassIcon.png" ></Image>
+                            <Entry Style="{StaticResource LoginEntry}" IsPassword="{Binding Source={x:Reference ShowPasswordActualTrigger}, Path=HidePassword}" x:Name="Password" Text="{Binding AuthUser.Password}" Placeholder="Password" />
+                            <ImageButton VerticalOptions="Center" HeightRequest="20" HorizontalOptions="End" Source="ic_eye_hide">
+                                <ImageButton.Triggers>
+                                    <EventTrigger Event="Clicked">
+                                        <local:ShowPasswordTriggerAction ShowIcon="ic_eye.png" HideIcon="ic_eye_hide.png" x:Name="ShowPasswordActualTrigger" />
+                                    </EventTrigger>
+                                </ImageButton.Triggers>
+                            </ImageButton>
+                        </StackLayout>
+
+
+                        <Button BackgroundColor="Transparent" HorizontalOptions="CenterAndExpand" FontSize="Small" TextColor="{StaticResource AlChavoBlue }" Text="Forgot your Password?" Command="{Binding GotoForgotPassCommand}"></Button>
+
+                        <Button HorizontalOptions="FillAndExpand" FontSize="Medium" Style="{StaticResource  LoginBtn }" Command="{Binding LoginCommand}" />
+
+                    </StackLayout>
+
+                </StackLayout>
+
+                <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand">
+                    <Label Text="Version 1.0.0" TextColor="{StaticResource SystemGray2}" Margin="8"></Label>
+                </StackLayout>
+            </StackLayout>
+        
+        </ScrollView>
+
+    </ContentPage.Content>
+
+</ContentPage>

@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="AlChavoMobilePayroll.Views.Company.CompanyDetail" Title="Company Info">
+    <Shell.TitleView>
+        <Grid Style="{StaticResource TitleViewGrid }" ColumnDefinitions="Auto,Auto" RowDefinitions="Auto">
+            <Label Grid.Column="2" Grid.Row="0" Style="{StaticResource HeaderTitleContent }" Text="{Binding Title}"></Label>
+            <ImageButton Grid.Column="2" Grid.Row="0" HorizontalOptions="End" Style="{StaticResource NavBarIcon}" x:Name="imgBtnLogo" Source="CompanyIcon.png" />
+        </Grid>
+    </Shell.TitleView>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Style="{StaticResource StackContent }" Padding="0,0,0,15">
+                <StackLayout Margin="10,15,10,20" HorizontalOptions="FillAndExpand">
+                    <Label TextColor="{StaticResource AlChavoBlue }" Text="{Binding name}" FontSize="20" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" VerticalOptions="CenterAndExpand" />
+                    <Label TextColor="{StaticResource AlChavoBlue }" Text="{Binding email}" FontSize="18" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
+                </StackLayout>
+                <Frame Style="{StaticResource FrmBasic }">
+                    <StackLayout>
+                        <Label Style="{StaticResource ListDtl1}" TextColor="{StaticResource AlChavoBlue}" Text="ID:" />
+                        <Label Style="{StaticResource ListDtl2}" Text="{Binding companyModel.CompID}" />
+                        <BoxView Style="{StaticResource BoxViewSeparator }"></BoxView>
+                        <Label Style="{StaticResource ListDtl1}" TextColor="{StaticResource AlChavoBlue}" Text="Company Name:" />
+                        <Label Style="{StaticResource ListDtl2}" Text="{Binding companyModel.Name}" />
+                        <BoxView Style="{StaticResource BoxViewSeparator }"></BoxView>
+                        <Label Style="{StaticResource ListDtl1}" TextColor="{StaticResource AlChavoBlue}" Text="Address:" />
+                        <Label Style="{StaticResource ListDtl2}" Text="{Binding companyModel.Addr1}" />
+                        <BoxView Style="{StaticResource BoxViewSeparator }"></BoxView>
+                        <Label Style="{StaticResource ListDtl1}" TextColor="{StaticResource AlChavoBlue}" Text="City:" />
+                        <Label Style="{StaticResource ListDtl2}" Text="{Binding companyModel.City}" />
+                        <BoxView Style="{StaticResource BoxViewSeparator }"></BoxView>
+                        <Label Style="{StaticResource ListDtl1}" TextColor="{StaticResource AlChavoBlue}" Text="Country:" />
+                        <Label Style="{StaticResource ListDtl2}" Text="{Binding companyModel.Country}" />
+                        <BoxView Style="{StaticResource BoxViewSeparator }"></BoxView>
+                        <Label Style="{StaticResource ListDtl1}" TextColor="{StaticResource AlChavoBlue}" Text="Postal Code:" />
+                        <Label Style="{StaticResource ListDtl2}" Text="{Binding companyModel.PostalCode}" />
+                        <BoxView Style="{StaticResource BoxViewSeparator }"></BoxView>
+                        <Label Style="{StaticResource ListDtl1}" TextColor="{StaticResource AlChavoBlue}" Text="Phone:" FontSize="19" />
+                        <Label Style="{StaticResource ListDtl2}" Text="{Binding companyModel.Phone}" />
+                        <BoxView Style="{StaticResource BoxViewSeparator }"></BoxView>
+                        <Label Style="{StaticResource ListDtl1}" TextColor="{StaticResource AlChavoBlue}" Text="Company Email:" />
+                        <Label Style="{StaticResource ListDtl2}" Text="{Binding companyModel.Email}" />
+                        <BoxView Style="{StaticResource BoxViewSeparator }"></BoxView>
+                        <Label Style="{StaticResource ListDtl1}" TextColor="{StaticResource AlChavoBlue}" Text="EIN Fed:" />
+                        <Label Style="{StaticResource ListDtl2}" Text="{Binding companyModel.EINFed}" />
+                        <BoxView Style="{StaticResource BoxViewSeparator }"></BoxView>
+                        <!--<Label Style="{StaticResource ListDtl1}" TextColor="{StaticResource AlChavoBlue}" Text="EIN State:" />
+                        <Label Style="{StaticResource ListDtl2}" Text="{Binding companyModel.EINState}" />
+                        <BoxView Style="{StaticResource BoxViewSeparator }"></BoxView>
+                        <Label Style="{StaticResource ListDtl1}" TextColor="{StaticResource AlChavoBlue}" Text="Junior Accountant:" />
+                        <Label Style="{StaticResource ListDtl2}" Text="{Binding companyModel.JuniorAccountant}" />
+                        <BoxView Style="{StaticResource BoxViewSeparator }"></BoxView>
+                        <Label Style="{StaticResource ListDtl1}" TextColor="{StaticResource AlChavoBlue}" Text="Senior Accountant:" />
+                        <Label Style="{StaticResource ListDtl2}" Text="{Binding companyModel.SeniorAccountant}" />
+                        <BoxView Style="{StaticResource BoxViewSeparator }"></BoxView>-->
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

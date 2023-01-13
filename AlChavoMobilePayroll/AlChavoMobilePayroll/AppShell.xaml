@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms" 
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:AlChavoMobilePayroll.Views"
+       xmlns:localSM="clr-namespace:AlChavoMobilePayroll.Views.SManagement" 
+       xmlns:localCR="clr-namespace:AlChavoMobilePayroll.Views.CheckRegister"   
+       xmlns:localAT="clr-namespace:AlChavoMobilePayroll.Views.Attendance" 
+       Title="AlChavoMobilePayroll"
+       x:Class="AlChavoMobilePayroll.AppShell" NavigationPage.HasNavigationBar="False">
+
+    <!--
+        The overall app visual hierarchy is defined here, along with navigation.
+    
+        https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/
+    -->
+
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Style x:Key="BaseStyle" TargetType="Element">
+
+                <Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Dark={StaticResource WindowBackgroundColorDark }, Light={StaticResource WindowBackgroundColorLight }}" />
+                <Setter Property="Shell.ForegroundColor" Value="{StaticResource SystemGray}" />
+                <Setter Property="Shell.TitleColor" Value="{StaticResource AlChavoBlue}" />
+                <Setter Property="Shell.NavBarHasShadow" Value="False" />
+
+                <Setter Property="Shell.DisabledColor" Value="BLack" />
+                <Setter Property="Shell.UnselectedColor" Value="Gray" />
+
+                <Setter Property="Shell.TabBarBackgroundColor" Value="{AppThemeBinding Dark={StaticResource WindowBackgroundColorDark }, Light={StaticResource WindowBackgroundColorLight }}" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource SystemGray}" />
+                <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource SystemGray}" />
+
+                <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource SystemGray}" />
+
+            </Style>
+            <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
+            <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />
+        </ResourceDictionary>
+    </Shell.Resources>
+
+    <!--<ShellItem Route="Login" FlyoutItemIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate localSM:Login  }" />
+    </ShellItem>-->
+    <ShellItem Route="LoginPage" FlyoutItemIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate localSM:Login  }" />
+    </ShellItem>
+    <TabBar>
+       
+        
+        <ShellContent Title="Home" Icon="home_icon.png" Route="Home" ContentTemplate="{DataTemplate localSM:Home }" />
+        <ShellContent Title="Timecard" Icon="clockTimeCard.png" Route="TimeCard" ContentTemplate="{DataTemplate localAT:TimeCard }"  />
+        <ShellContent Title="Check Register" Icon="bills_icon.png"  Route="CheckRegisterIndex" ContentTemplate="{DataTemplate  localCR:CheckRegisterIndex}"  />
+        <ShellContent Title="Time Off" Route="TimeOff" Icon="schedule_icon.png" ContentTemplate="{DataTemplate localAT:TimeOff }" />
+        <ShellContent Title="More" Icon="More_icon.png" Route="MoreIndex" ContentTemplate="{DataTemplate  localSM:MoreIndex}"  />
+       
+        
+        <!--<ShellContent Title="Browse" Icon="icon_feed.png" ContentTemplate="{DataTemplate local:ItemsPage}" />
+        <ShellContent Title="Login" Icon="home_icon.png" />
+        <ShellContent Title="Timecard" Icon="payees_icon.png" />
+        <ShellContent Title="Check Register" Icon="bills_icon.png" />
+        <ShellContent Title="Time Off" Icon="schedule_icon.png" />
+        <ShellContent Title="More" Icon="More_icon.png" />-->
+        
+      
+    </TabBar>
+    
+  
+
+    <!--
+        If you would like to navigate to this content you can do so by calling
+        await Shell.Current.GoToAsync("//LoginPage");
+  
+    <TabBar>
+        <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" />
+    </TabBar>
+  -->
+
+</Shell>

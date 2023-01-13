@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:local="clr-namespace:AlChavoMobilePayroll.ViewModels"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="clr-namespace:Xamarin.CommunityToolkit.UI.Views;assembly=Xamarin.CommunityToolkit" 
+             x:Class="AlChavoMobilePayroll.Views.SManagement.Punch"
+             NavigationPage.HasNavigationBar="True" 
+             NavigationPage.HasBackButton="False" Shell.BackgroundColor="White" 
+             Background="#EAEAEA" 
+             xmlns:behaviorsPack="clr-namespace:Xamarin.Forms.BehaviorsPack;assembly=Xamarin.Forms.BehaviorsPack" 
+             xmlns:telerikInput="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Primary">#484559</Color>
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="White" />
+                <Setter Property="BarTextColor" Value="White" />
+            </Style>
+
+            <Style TargetType="ImageButton" x:Key="NavBarIcon">
+                <Setter Property="HorizontalOptions" Value="End"></Setter>
+                <Setter Property="VerticalOptions" Value="Start"></Setter>
+                <Setter Property="BackgroundColor" Value="Transparent"></Setter>
+                <Setter Property="HeightRequest" Value="30"></Setter>
+                <Setter Property="Margin" Value="3,0,3,0"></Setter>
+            </Style>
+            <Style TargetType="Frame" x:Key="MainFrame">
+                <Setter Property="Padding" Value="5,5,5,1" />
+                <Setter Property="Margin" Value="0,6,0,6" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="CornerRadius" Value="10" />
+
+            </Style>
+            <Style TargetType="Label" x:Key="MainFrameTitle">
+                <Setter Property="FontSize" Value="24" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="FontAttributes" Value="None" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+
+            </Style>
+            <Style TargetType="Label" x:Key="MainFrameDetail1">
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+            </Style>
+
+            <ControlTemplate x:Key="headerTemplate">
+                <Label Text="Select Company:" TextColor="{StaticResource AlChavoBlue }" FontSize="18" FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" BackgroundColor="{StaticResource GrayControl }" />
+            </ControlTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Shell.TitleView>
+        <Grid Style="{StaticResource TitleViewGrid }" ColumnDefinitions="Auto,Auto" RowDefinitions="Auto">
+            <Label Grid.Column="2" Grid.Row="0" Style="{StaticResource HeaderTitleContent }" Text="{Binding Title}"></Label>
+            <ImageButton Grid.Column="2" Grid.Row="0" HorizontalOptions="End" Style="{StaticResource NavBarIcon}" x:Name="imgBtnLogo" Source="CompanyIcon.png" />
+        </Grid>
+    </Shell.TitleView>
+    <ContentPage.Content>
+
+        <RefreshView RefreshColor="{StaticResource AlChavoBlue }"
+                     Command="{Binding RefreshCommand}"
+                     IsRefreshing="{Binding IsRefreshing}">
+            
+        <ScrollView VerticalOptions="FillAndExpand">
+
+            <StackLayout Style="{StaticResource StackContent }">
+                <Frame Style="{StaticResource FrmBasic}">
+                    <StackLayout Style="{StaticResource StackContent }" Orientation="Vertical">
+                        <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Margin="5" Orientation="Horizontal">
+                            <Label Text="Department:" FontSize="16" HorizontalTextAlignment="Start" VerticalOptions="Center" />
+                            <telerikInput:RadComboBox x:Name="rcbDepartment" VerticalOptions="StartAndExpand" ItemsSource="{Binding DepartmentList}" DisplayMemberPath="Description" SearchMode="{Binding SearchMode}" SearchTextPath="DepartmentId" IsEditable="True" SelectedItem="{Binding SelectedDepartment}" SelectionMode="Single" WidthRequest="210" CornerRadius="0">
+                                <telerikInput:RadComboBox.Behaviors>
+                                    <behaviorsPack:EventToCommandBehavior EventName="SelectionChanged" Command="{Binding SelectedDepartmentCommand }" CommandParameter="{Reference rcbDepartment}" />
+                                </telerikInput:RadComboBox.Behaviors>
+                                <telerikInput:RadComboBox.HeaderTemplate>
+                                    <DataTemplate>
+                                        <Frame BackgroundColor="{StaticResource AlChavoBlue}" VerticalOptions="CenterAndExpand">
+                                            <Label Text="Select Department from List" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource WindowBackgroundColorLight   }" />
+                                        </Frame>
+                                    </DataTemplate>
+                                </telerikInput:RadComboBox.HeaderTemplate>
+                            </telerikInput:RadComboBox>
+                        </StackLayout>
+
+                        <StackLayout HeightRequest="180" Margin="0,10" VerticalOptions="Start" HorizontalOptions="Center">
+
+                            <Frame Padding="0" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" CornerRadius="85" IsClippedToBounds="True" HeightRequest="170" WidthRequest="170" BorderColor="{StaticResource AlChavoBlueThree  }" BackgroundColor="Transparent">
+
+                                <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Orientation="Vertical">
+                                    <Label FontSize="18" HorizontalTextAlignment="Center" VerticalOptions="FillAndExpand" Text="{Binding CurrentDate, StringFormat='{0:dddd}'}" TextColor="{StaticResource SystemGray }" />
+                                    <Label Text="{Binding DateTime, StringFormat='{0:T}'}" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center">
+                                        <Label.BindingContext>
+                                            <local:ClockViewModel />
+                                        </Label.BindingContext>
+                                    </Label>
+                                    <Label FontSize="12" TextTransform="Uppercase" HorizontalTextAlignment="Center" VerticalOptions="Start" Text="{Binding CurrentDate, StringFormat='{0:MMMM dd, yyyy}'}" TextColor="{StaticResource SystemGray }" />
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+                        <StackLayout VerticalOptions="End">
+                                <StackLayout>
+                                    <Button Style="{StaticResource BlueBtn}"
+                                            Command="{Binding ShutterCommand, Source={x:Reference cameraView}}"
+                                            CommandParameter="1"
+                                            Text="Punch In"
+                                            ClassId="PunchIn"
+                                            Clicked="PunchClicked"
+                                            Margin="45,0,45,10"></Button>
+                                    <Button Style="{StaticResource BlueBtn}"
+                                            BackgroundColor="{StaticResource SystemGray2}"
+                                            Command="{Binding ShutterCommand, Source={x:Reference cameraView}}"
+                                            CommandParameter="0"
+                                            Text="Punch Out"
+                                            ClassId="PunchOut"
+                                            Clicked="PunchClicked"
+                                            Margin="45,0,45,10"></Button>
+                                </StackLayout> 
+
+                            <StackLayout Orientation="Horizontal">
+                                <Image Source="{Binding iconPinMap}" HorizontalOptions="Start" WidthRequest="30" />
+                                <Label FontSize="18" HorizontalTextAlignment="Start" VerticalOptions="FillAndExpand" Text="{Binding alertLocation}" />
+                            </StackLayout>
+
+                                <xct:CameraView x:Name="cameraView"
+                                                CaptureMode="Photo"
+                                                HeightRequest="300"
+                                                CameraOptions="Front"
+                                                MediaCaptured="MediaCaptured">
+                                    <xct:CameraView.Behaviors>
+                                        <behaviorsPack:EventToCommandBehavior Command="{Binding DoPunchCommand}"
+                                                                              EventName="MediaCaptured" />
+                                    </xct:CameraView.Behaviors>
+                                </xct:CameraView>
+                            </StackLayout>
+
+                    </StackLayout>
+
+                </Frame>
+
+                <Frame Style="{StaticResource FrmBasic}">
+
+                    <StackLayout Padding="10">
+
+                        <Label FontSize="19" FontAttributes="Bold" HorizontalTextAlignment="Start" VerticalOptions="FillAndExpand" Text="Recent Punches" />
+ 
+                        <Line X1="0" Y1="0" X2="360" Y2="0" Stroke="Gray" />
+
+                        <CollectionView HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand" HeightRequest="330" ItemsSource="{Binding LRecentPunchList}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="0.6*,0.3*" RowDefinitions="Auto">
+                                        <Label Grid.Column="0" FontSize="14" Text="{Binding PunchTime, StringFormat='{0:MMMM dd, h:mm tt}' }" Margin="5,10,5,10"></Label>
+
+                                            <Label Grid.Column="1"
+                                                   FontSize="14"
+                                                   HorizontalTextAlignment="Center"
+                                                   Text="{ Binding DepartmentId }"
+                                                   Margin="5,10,5,10"></Label>
+                                            <Label Grid.Column="2" HorizontalTextAlignment="End" FontSize="14" Text="{Binding PunchDesc}" Margin="5,10,5,10"></Label>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+                </Frame>
+
+            </StackLayout>
+        </ScrollView>
+        
+        </RefreshView>  
+    </ContentPage.Content>
+</ContentPage>

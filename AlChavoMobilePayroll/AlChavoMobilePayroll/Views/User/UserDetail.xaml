@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="AlChavoMobilePayroll.Views.User.UserDetail" Title="Personal Info">
+    <Shell.TitleView>
+        <Grid Style="{StaticResource TitleViewGrid }" ColumnDefinitions="Auto,Auto" RowDefinitions="Auto">
+            <Label Grid.Column="2" Grid.Row="0" Style="{StaticResource HeaderTitleContent }" Text="{Binding Title}"></Label>
+            <ImageButton Grid.Column="2" Grid.Row="0" HorizontalOptions="End" Style="{StaticResource NavBarIcon}" x:Name="imgBtnLogo" Source="CompanyIcon.png" />
+        </Grid>
+    </Shell.TitleView>
+
+    <ContentPage.Content>
+        <StackLayout Style="{DynamicResource StackContent }" Orientation="Vertical">
+            <StackLayout Margin="10,15,10,20" HorizontalOptions="FillAndExpand">
+                <Label TextColor="{StaticResource AlChavoBlue }" Text="{Binding  userModel.Name}" FontSize="20" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" VerticalOptions="CenterAndExpand" />
+                <Label TextColor="{StaticResource AlChavoBlue }" Text="{Binding userModel.Email}" FontSize="18" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
+            </StackLayout>
+            <StackLayout>
+
+                <Frame Style="{StaticResource FrmBasic }">
+                    <StackLayout Orientation="Vertical">
+                        <Label Style="{StaticResource ListDtl1}" TextColor="{StaticResource AlChavoBlue}" Text="Name:" />
+                        <Label Style="{StaticResource ListDtl2}" Text="{Binding userModel.Name}" FontSize="18" FontAttributes="Bold" />
+                        <BoxView Style="{StaticResource BoxViewSeparator }"></BoxView>
+                        <Label Style="{StaticResource ListDtl1}" TextColor="{StaticResource AlChavoBlue}" Text="Phone:" />
+                        <Label Style="{StaticResource ListDtl2}" Text="{Binding userModel.Phone}" FontSize="18" FontAttributes="Bold" />
+                        <BoxView Style="{StaticResource BoxViewSeparator }"></BoxView>
+                        <Label Style="{StaticResource ListDtl1}" TextColor="{StaticResource AlChavoBlue}" Text="Email:" />
+                        <Label Style="{StaticResource ListDtl2}" Text="{Binding userModel.Email}" FontSize="18" FontAttributes="Bold" />
+                        <BoxView Style="{StaticResource BoxViewSeparator }"></BoxView>
+                        <Label Style="{StaticResource ListDtl1}" TextColor="{StaticResource AlChavoBlue}" Text="Country:" />
+                        <Label Style="{StaticResource ListDtl2}" Text="{Binding userModel.Country}" FontSize="18" FontAttributes="Bold" />
+                        <BoxView Style="{StaticResource BoxViewSeparator }"></BoxView>
+                        <Label Style="{StaticResource ListDtl1}" TextColor="{StaticResource AlChavoBlue}" Text="City:" />
+                        <Label Style="{StaticResource ListDtl2}" Text="{Binding userModel.City}" FontSize="18" FontAttributes="Bold" />
+                        <BoxView Style="{StaticResource BoxViewSeparator }"></BoxView>
+                        <Label Style="{StaticResource ListDtl1}" TextColor="{StaticResource AlChavoBlue}" Text="Tax Method:" />
+                        <Label Style="{StaticResource ListDtl2}" Text="{Binding userModel2.City}" FontSize="18" FontAttributes="Bold" />
+                        <BoxView Style="{StaticResource BoxViewSeparator }"></BoxView>
+                    </StackLayout>
+                </Frame>
+
+
+
+            </StackLayout>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

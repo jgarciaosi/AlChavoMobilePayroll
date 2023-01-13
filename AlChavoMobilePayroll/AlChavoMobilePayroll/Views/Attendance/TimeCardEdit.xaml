@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" x:Name="TimeCardEditPage" xmlns:telerikInput="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:behaviorsPack="http://xamarin.com/schemas/2020/toolkit" x:Class="AlChavoMobilePayroll.Views.Attendance.TimeCardEdit" Shell.TabBarIsVisible="False">
+
+    <Shell.TitleView>
+        <Grid Style="{StaticResource TitleViewGrid }" ColumnDefinitions="Auto,Auto" RowDefinitions="Auto">
+            <Label  Grid.Column="2" Grid.Row="0" Style="{StaticResource HeaderTitleContent }" Text="{Binding Title}"></Label>
+            <ImageButton Grid.Column="2" Grid.Row="0" HorizontalOptions="End" Style="{StaticResource NavBarIcon}" x:Name="imgBtnLogo" Source="CompanyIcon.png" />
+        </Grid>
+    </Shell.TitleView>
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical">
+            <Frame Margin="8,2" CornerRadius="10">
+                <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand"  Orientation="Horizontal" >
+                    <Label HorizontalOptions="StartAndExpand"  FontSize="18" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" Text="Edit hours"></Label>
+                    <ImageButton HorizontalOptions="EndAndExpand" CommandParameter="{Binding .}" Command="{Binding IAddPunchCommand}" BackgroundColor="Transparent" Source="add_icon.png"></ImageButton>
+                </StackLayout>
+            </Frame>
+
+            <CollectionView Margin="8,2" ItemsSource="{Binding punchesList}" x:Name="collectionPunches">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="8"></LinearItemsLayout>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+
+                    <DataTemplate>
+                        <Frame CornerRadius="10" BorderColor="LightGray">
+                            <StackLayout>
+                                <StackLayout x:Name="StackPunches" Orientation="Vertical">
+                                    <!--<Picker Title="Select Department"></Picker>-->
+
+                                    <Label x:Name="PunchID" IsVisible="false" Text="{Binding PunchID}"></Label>
+                                    <telerikInput:RadComboBox x:Name="rcbDepartment" VerticalOptions="CenterAndExpand"  ItemsSource="{Binding Path=BindingContext.departmentList,Source={x:Reference TimeCardEditPage}}" DisplayMemberPath="Description" SearchMode="{Binding SearchMode}" SearchTextPath="DepartmentId" IsEditable="True" SelectedItem="{Binding Path=BindingContext.selectedDepartment, Source={x:Reference TimeCardEditPage}}" SelectionMode="Single" WidthRequest="190" CornerRadius="0">
+                                        <telerikInput:RadComboBox.Behaviors>
+                                            <behaviorsPack:EventToCommandBehavior EventName="SelectionChanged" Command="{Binding Path=BindingContext.SelectedDepartmentCommand,Source={x:Reference TimeCardEditPage}}" CommandParameter="{Reference StackPunches}" />
+                                        </telerikInput:RadComboBox.Behaviors>
+                                        <telerikInput:RadComboBox.HeaderTemplate>
+                                            <DataTemplate>
+                                                <Frame BackgroundColor="{StaticResource AlChavoBlue}" VerticalOptions="CenterAndExpand" HeightRequest="25">
+                                                    <Label Text="Select Department from List" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource WindowBackgroundColorLight   }" />
+                                                </Frame>
+                                            </DataTemplate>
+                                        </telerikInput:RadComboBox.HeaderTemplate>
+                                    </telerikInput:RadComboBox>
+
+                                </StackLayout>
+                                <Grid ColumnDefinitions="5.6*,3.9*,0.9*" RowDefinitions="Auto,Auto" x:Name="GridPunchDetail">
+                                    <Label x:Name="PunchIDGrid" IsVisible="false" Text="{Binding PunchID}"></Label>
+                                   
+                                    <Label Text="Date/Time" FontAttributes="Bold" TextColor="Black" Grid.Column="0" Grid.Row="0"></Label>
+                                    <Label Text="Punch In/Out" FontAttributes="Bold" TextColor="Black" Grid.Column="1" Grid.Row="0"></Label>
+                                  
+                                    <telerikInput:RadDateTimePicker Grid.Column="0" Grid.Row="1" HorizontalOptions="Start" Date="{Binding PunchDateTime}" x:Name="dateTimePicker">
+                                        <telerikInput:RadDateTimePicker.Behaviors>
+                                            <behaviorsPack:EventToCommandBehavior EventName="SelectionChanged" Command="{Binding Path=BindingContext.SelectedPunchTimeCommand,Source={x:Reference TimeCardEditPage}}" CommandParameter="{Reference GridPunchDetail}">
+                                            </behaviorsPack:EventToCommandBehavior>
+                                        </telerikInput:RadDateTimePicker.Behaviors>
+                                    </telerikInput:RadDateTimePicker>
+                                    
+                                    <telerikInput:RadSegmentedControl Grid.Column="1" Grid.Row="1" x:Name="segmentControl" SelectedIndex="{Binding PunchInIndex}" SegmentBackgroundColor="#FFFFFF" SegmentTextColor="#3A9BFD" SelectedSegmentBackgroundColor="#3A9BFD" SelectedSegmentTextColor="#FFFFFF" >
+                                        <telerikInput:RadSegmentedControl.ItemsSource>
+                                            <x:Array Type="{x:Type x:String}">
+                                                <x:String>IN</x:String>
+                                                <x:String>OUT</x:String>
+                                            </x:Array>
+                                        </telerikInput:RadSegmentedControl.ItemsSource>
+                                        <telerikInput:RadSegmentedControl.Behaviors>
+                                            <behaviorsPack:EventToCommandBehavior EventName="SelectionChanged" Command="{Binding Path=BindingContext.SelectedPunchInOutCommand,Source={x:Reference TimeCardEditPage}}" CommandParameter="{Reference GridPunchDetail}">
+                                            </behaviorsPack:EventToCommandBehavior>
+                                        </telerikInput:RadSegmentedControl.Behaviors>
+                                    </telerikInput:RadSegmentedControl>
+                                
+                                    <ImageButton Grid.Column="2" Grid.Row="1" HorizontalOptions="End" BackgroundColor="Transparent" CommandParameter="{Binding .}" Command="{Binding Path=BindingContext.IDeletePunchCommand,Source={x:Reference TimeCardEditPage}}" Source="Trashicon.png"></ImageButton>
+                                
+                                </Grid>
+
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

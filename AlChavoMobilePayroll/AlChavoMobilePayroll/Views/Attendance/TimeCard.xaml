@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Name="TimeCardPage" xmlns:telerikInput="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input" xmlns:behaviorsPack="http://xamarin.com/schemas/2020/toolkit" x:Class="AlChavoMobilePayroll.Views.Attendance.TimeCard">
+
+    <Shell.TitleView>
+        <Grid Style="{StaticResource TitleViewGrid }" ColumnDefinitions="Auto,Auto" RowDefinitions="Auto">
+            <Label Grid.Column="2" Grid.Row="0" Style="{StaticResource HeaderTitleContent }" Text="{Binding Title}"></Label>
+            <ImageButton Grid.Column="2" Grid.Row="0" HorizontalOptions="End" Style="{StaticResource NavBarIcon}" x:Name="imgBtnLogo" Source="CompanyIcon.png" />
+        </Grid>
+    </Shell.TitleView>
+
+    <StackLayout>
+        <Frame Style="{StaticResource SearchFrm}" >
+            <Grid Margin="10" RowDefinitions="40" ColumnDefinitions="1.5*,7*,1.5*">
+
+                <ImageButton Grid.Column="0" Grid.Row="0" Command="{Binding IPreviousPeriodCommand}" Style="{StaticResource arrowLeft }"></ImageButton>
+
+                <telerikInput:RadComboBox Grid.Column="1" Grid.Row="0" x:Name="rcbPeriods" SelectedItem="{Binding selectedTimecardPeriod}" ItemsSource="{Binding timeCardPeriodsList}" DisplayMemberPath="PeriodDescription" SelectionMode="Single" WidthRequest="250" CornerRadius="0" HorizontalOptions="StartAndExpand">
+                    <telerikInput:RadComboBox.Behaviors>
+                        <behaviorsPack:EventToCommandBehavior EventName="SelectionChanged" Command="{Binding PeriodsChangedCommand }" CommandParameter="{Reference rcbPeriods}" />
+                    </telerikInput:RadComboBox.Behaviors>
+                </telerikInput:RadComboBox>
+
+                <ImageButton Grid.Column="2" Grid.Row="0" Command="{Binding INextPeriodCommand}" Style="{StaticResource arrowRight  }"></ImageButton>
+
+            </Grid>
+        </Frame>
+
+        <ListView HorizontalOptions="FillAndExpand" SelectionMode="None" Margin="10" HasUnevenRows="True" VerticalOptions="StartAndExpand" ItemsSource="{Binding timeCardEmployeeNonGroupedList}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout>
+
+                            <StackLayout IsVisible="{Binding IsVisibleHeader}" Margin="10,10,10,10" Orientation="Horizontal">
+                                <Label FontAttributes="Bold" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" FontSize="18" Text="{Binding OrigPunchInDate, StringFormat='{0:dddd, dd MMMM yyyy}'}"></Label>
+
+                            </StackLayout>
+                            <!--<Line X1="0" Y1="0" X2="360" Y2="0" Stroke="Gray" />-->
+
+                            <StackLayout VerticalOptions="CenterAndExpand" Margin="10,10,35,10" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                                <StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal">
+
+                                    <!--<Button TextColor="#4665C6" Padding="0.01" Margin="0.01" BorderColor="HotPink" FontSize="18" Text="{Binding PunchInHour, StringFormat='{0:H:mm tt}'}" BackgroundColor="White" ></Button>
+                                        <Button TextColor="#4665C6" Padding="0.01" Margin="0.01" BorderColor="HotPink" FontSize="18" Text="{Binding PunchOutHour, StringFormat='{0:H:mm tt}'}"  BackgroundColor="White"></Button>-->
+
+                                    <Label TextColor="#4665C6" IsEnabled="{Binding Path=BindingContext.IsEnabledPunch,Source={x:Reference TimeCardPage}}" x:Name="LblPunchIn" HorizontalTextAlignment="End" TextDecorations="Underline" FontSize="18" Text="{Binding PunchInHour, StringFormat='{0:H:mm tt}'}" HorizontalOptions="Start" VerticalOptions="EndAndExpand">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.GoToPunchInViewCommand,Source={x:Reference TimeCardPage}}" CommandParameter="{Binding .}"></TapGestureRecognizer>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+
+                                    <Label TextDecorations="Underline" IsEnabled="{Binding Path=BindingContext.IsEnabledPunch,Source={x:Reference TimeCardPage}}" TextColor="#4665C6" x:Name="LblPunchOut" HorizontalTextAlignment="End" HorizontalOptions="Start" FontSize="18" Text="{Binding PunchOutHour, StringFormat='{0:H:mm tt}'}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.GoToPunchOutViewCommand,Source={x:Reference TimeCardPage}}" CommandParameter="{Binding .}"></TapGestureRecognizer>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                    <Label HorizontalTextAlignment="End" HorizontalOptions="End" FontSize="18" Text="{Binding SumOfHoursWorked}"></Label>
+                                </StackLayout>
+                            </StackLayout>
+
+                        </StackLayout>
+
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+            <ListView.Footer>
+                <StackLayout VerticalOptions="StartAndExpand" Margin="10" BindableLayout.ItemsSource="{Binding timeCardEmployeeLicenses}">
+
+                    <BindableLayout.ItemTemplate>
+
+                        <DataTemplate>
+
+                            <Frame CornerRadius="20" BackgroundColor="#eaeaea">
+                                <StackLayout>
+
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+                                        <Label Text="License:" FontAttributes="Bold" TextColor="Black" FontSize="18"></Label>
+                                        <Label HorizontalTextAlignment="End" HorizontalOptions="StartAndExpand" FontSize="18" Text="{Binding EarningID}"></Label>
+                                    </StackLayout>
+                                    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                                        <Label Text="Start:" FontAttributes="Bold" TextColor="Black" FontSize="18"></Label>
+                                        <Label HorizontalTextAlignment="End" HorizontalOptions="End" FontSize="18" Text="{Binding LicenseStart, StringFormat='{0:MM/dd/yyyy}'}"></Label>
+                                    </StackLayout>
+                                    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" Orientation="Horizontal">
+                                        <Label Text="End:" FontAttributes="Bold" TextColor="Black" FontSize="18"></Label>
+                                        <Label HorizontalTextAlignment="End" HorizontalOptions="End" FontSize="18" Text="{Binding LicenseEnd, StringFormat='{0:MM/dd/yyyy}'}"></Label>
+                                    </StackLayout>
+                                    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" Orientation="Horizontal">
+                                        <Label Text="Hours:" FontAttributes="Bold" TextColor="Black" FontSize="18"></Label>
+                                        <Label HorizontalTextAlignment="End" HorizontalOptions="End" FontSize="18" Text="{Binding RequestedHours}"></Label>
+                                    </StackLayout>
+                                    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" Orientation="Horizontal">
+                                        <Label Text="Status:" FontAttributes="Bold" TextColor="Black" FontSize="18"></Label>
+                                        <Label HorizontalTextAlignment="End" HorizontalOptions="End" FontSize="18" Text="{Binding LicenseStatus}"></Label>
+                                    </StackLayout>
+
+                                </StackLayout>
+                            </Frame>
+
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+
+                </StackLayout>
+
+            </ListView.Footer>
+        </ListView>
+
+    </StackLayout>
+
+</ContentPage>

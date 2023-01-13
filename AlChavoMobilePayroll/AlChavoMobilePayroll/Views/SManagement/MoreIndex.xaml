@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="AlChavoMobilePayroll.Views.SManagement.MoreIndex" xmlns:xct="http://xamarin.com/schemas/2020/toolkit" NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="StackLayout" x:Key="BtnStackLayout">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource FrameForListViewBackgroundColorDark  }, Light={StaticResource FrameForListViewBackgroundColorLight  }}" />
+                <Setter Property="Padding" Value="5" />
+                <Setter Property="Margin" Value="10,0,10,0" />
+                <Setter Property="HeightRequest"  Value="70" />
+                <Setter Property="Orientation" Value="Vertical" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+
+            </Style>
+            <Style TargetType="Image" x:Key="BtnImage">
+
+                <Setter Property="WidthRequest" Value="30" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="xct:IconTintColorEffect.TintColor" Value="{StaticResource AlChavoBlueThree }" />
+            </Style>
+            <Style TargetType="Image" x:Key="BtnImageII">
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="xct:IconTintColorEffect.TintColor" Value="{StaticResource ShadowColor }" />
+
+
+            </Style>
+            <Style TargetType="Label" x:Key="BtnLabel">
+                <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontSize" Value="18" />
+            </Style>
+       </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Shell.TitleView>
+        <Grid Style="{StaticResource TitleViewGrid }" ColumnDefinitions="Auto,Auto" RowDefinitions="Auto">
+            <Label Grid.Column="2" Grid.Row="0" Style="{StaticResource HeaderTitleContent }" Text="{Binding Title}"></Label>
+            <ImageButton Grid.Column="2" Grid.Row="0" HorizontalOptions="End" Style="{StaticResource NavBarIcon}" x:Name="imgBtnLogo" Source="CompanyIcon.png" />
+        </Grid>
+    </Shell.TitleView>
+
+
+    <ContentPage.Content>
+        <StackLayout Style="{StaticResource StackContent }" Orientation="Vertical">
+
+            <Grid ColumnDefinitions="*" RowDefinitions="60,60,60">
+              
+                <StackLayout Grid.Row="0" Style="{StaticResource BtnStackLayout }">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToSickAndVacHistoryReportCommand}" NumberOfTapsRequired="1" />
+                    </StackLayout.GestureRecognizers>
+                    <StackLayout Orientation="Horizontal">
+                        <Image Style="{StaticResource BtnImage }" Source="history_icon.png" />
+                        <Label Style="{StaticResource BtnLabel  }" Text="Sick and Vacation History" />
+                        <Image Style="{StaticResource BtnImageII }" Source="chevron_right.png" />
+                    </StackLayout>
+                    <BoxView Color="{StaticResource ShadowColor }" WidthRequest="110" HeightRequest="1" Margin="0"></BoxView>
+                </StackLayout>
+               
+                <StackLayout Grid.Row="1" Style="{StaticResource BtnStackLayout }">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToScheduleCommand}" NumberOfTapsRequired="1" />
+                    </StackLayout.GestureRecognizers>
+                    <StackLayout Orientation="Horizontal">
+                        <Image Style="{StaticResource BtnImage }" Source="calendar_icon.png" />
+                        <Label Style="{StaticResource BtnLabel }" Text="Employee Schedule" />
+                        <Image Style="{StaticResource BtnImageII }" Source="chevron_right.png" />
+                    </StackLayout>
+                    <BoxView Color="{StaticResource ShadowColor }" WidthRequest="110" HeightRequest="1" Margin="0"></BoxView>
+                </StackLayout>
+             
+                <StackLayout Grid.Row="2" Style="{StaticResource BtnStackLayout }">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToDownloadDocumentsCommand}" NumberOfTapsRequired="1" />
+                    </StackLayout.GestureRecognizers>
+                    <StackLayout Orientation="Horizontal">
+                        <Image Style="{StaticResource BtnImage }" Source="download_icon.png" />
+                        <Label Style="{StaticResource BtnLabel }" Text="Download Documents" />
+                        <Image Style="{StaticResource BtnImageII }" Source="chevron_right.png" />
+                    </StackLayout>
+                    <BoxView Color="{StaticResource ShadowColor }" WidthRequest="110" HeightRequest="1" Margin="0"></BoxView>
+                </StackLayout>
+            </Grid>
+
+
+
+
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

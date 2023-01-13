@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" x:Name="DocumentsIndexPage" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:behaviorsPack="http://xamarin.com/schemas/2020/toolkit" x:Class="AlChavoMobilePayroll.Views.DownloadDocuments.DocumentsIndex">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Shell.TitleView>
+        <Grid Style="{StaticResource TitleViewGrid }" ColumnDefinitions="Auto,Auto" RowDefinitions="Auto">
+            <Label Grid.Column="2" Grid.Row="0" Style="{StaticResource HeaderTitleContent }" Text="{Binding Title}"></Label>
+            <ImageButton Grid.Column="2" Grid.Row="0" HorizontalOptions="End" Style="{StaticResource NavBarIcon}" x:Name="imgBtnLogo" Source="CompanyIcon.png" />
+        </Grid>
+    </Shell.TitleView>
+
+    <ContentPage.Content>
+        <StackLayout Style="{StaticResource StackContent }">
+            <Frame Style="{StaticResource ListItemFrm }">
+                <StackLayout>
+                    <Label Style="{StaticResource HeaderTitleContent }" Text="Documents"></Label>
+
+                    <CollectionView x:Name="Documents"  VerticalOptions="StartAndExpand"    ItemsSource="{Binding DocumentsList}" SelectionMode="None"   >
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Orientation="Vertical">
+                                    <StackLayout Style="{StaticResource StackContent}" Orientation="Horizontal">
+                                        <Label x:Name="LblDocumentPath" Text="{Binding FileName}" IsVisible="false"></Label>
+                                        <Label  Text="{Binding Field}" Style="{StaticResource ListDtl1  }"  VerticalTextAlignment="Center"   HeightRequest="35" Margin="5" HorizontalOptions="Start" VerticalOptions="Center" ></Label>
+                                        <ImageButton Source="Download.png" Margin="5" HeightRequest="35" HorizontalOptions="EndAndExpand" VerticalOptions="Center" BackgroundColor="Transparent">
+                                            <ImageButton.Behaviors>
+                                                <behaviorsPack:EventToCommandBehavior EventName="Clicked" Command="{Binding Path=BindingContext.SelectedDocumentCommand,Source={x:Reference DocumentsIndexPage}}" CommandParameter="{Reference LblDocumentPath}"></behaviorsPack:EventToCommandBehavior>
+                                            </ImageButton.Behaviors>
+                                        </ImageButton>
+                                    </StackLayout>
+                                    <BoxView Style="{StaticResource BoxViewSeparator   }"></BoxView>
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                  
+
+                    <Label Style="{StaticResource HeaderTitleContent }" IsVisible="{Binding IsVisibleOptionalFields}" Text="Optional Fields"></Label>
+                    <CollectionView x:Name="OptionalFieldsDocuments" IsVisible="{Binding IsVisibleOptionalFields}" VerticalOptions="StartAndExpand" ItemsSource="{Binding OptionalFieldList}" SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Orientation="Vertical">
+                                    <StackLayout Style="{StaticResource StackContent}" Orientation="Horizontal">
+                                        <Label x:Name="LblOFDocumentPath" Text="{Binding FileName}" IsVisible="false"></Label>
+                                        <Label Text="{Binding Field}" Style="{StaticResource ListDtl1  }"  VerticalTextAlignment="Center" HeightRequest="35" Margin="5" HorizontalOptions="Start" VerticalOptions="Center"></Label>
+                                        <ImageButton  Source="Download.png" Margin="5" HeightRequest="35" HorizontalOptions="EndAndExpand" VerticalOptions="Center" BackgroundColor="Transparent" >
+                                            <ImageButton.Behaviors>
+                                                <behaviorsPack:EventToCommandBehavior EventName="Clicked" Command="{Binding Path=BindingContext.SelectedDocumentCommand,Source={x:Reference DocumentsIndexPage}}" CommandParameter="{Reference LblOFDocumentPath}"></behaviorsPack:EventToCommandBehavior>
+                                            </ImageButton.Behaviors>
+                                        </ImageButton>
+                                    </StackLayout>
+                                    <BoxView Style="{StaticResource BoxViewSeparator   }"></BoxView>
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+
+            </Frame>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

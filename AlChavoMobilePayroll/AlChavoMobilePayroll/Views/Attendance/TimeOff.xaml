@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives" x:Name="TimeOffPage" xmlns:telerikDataControls="clr-namespace:Telerik.XamarinForms.DataControls;assembly=Telerik.XamarinForms.DataControls" xmlns:listView="clr-namespace:Telerik.XamarinForms.DataControls.ListView;assembly=Telerik.XamarinForms.DataControls" xmlns:telerikInput="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input" xmlns:behaviorsPack="http://xamarin.com/schemas/2020/toolkit" xmlns:telerikNumericInput="clr-namespace:Telerik.XamarinForms.Input.NumericInput;assembly=Telerik.XamarinForms.Input" xmlns:xct="clr-namespace:Xamarin.Forms.BehaviorsPack;assembly=Xamarin.Forms.BehaviorsPack" x:Class="AlChavoMobilePayroll.Views.Attendance.TimeOff">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label" x:Key="LblValues">
+                <Setter Property="HorizontalOptions" Value="EndAndExpand"></Setter>
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"></Setter>
+                <Setter Property="FontSize" Value="18"></Setter>
+                <Setter Property="FontAttributes" Value="Bold"></Setter>
+            </Style>
+            <DataTemplate x:Key="ListViewItemTemplatePending">
+                <listView:ListViewTemplateCell>
+                    <listView:ListViewTemplateCell.View>
+                        <Grid Margin="16">
+                            <Label IsVisible="false" Text="{Binding ID}"></Label>
+                            <Label Grid.Row="0" FontAttributes="Bold" TextColor="Black" Text="{Binding LicenseDate}" />
+                            <Label Grid.Row="1" Text="{Binding EarningID}" />
+                            <Label Grid.Row="2">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding RequestedHours}"></Span>
+                                        <Span Text=" Total hours"></Span>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <ImageButton Grid.Row="3" CommandParameter="{Binding .}" Command="{Binding Path=BindingContext.DeleteRequestTimeOffCommand,Source={x:Reference TimeOffPage} }" BackgroundColor="Transparent" Source="Trashicon.png"></ImageButton>
+                        </Grid>
+                    </listView:ListViewTemplateCell.View>
+                </listView:ListViewTemplateCell>
+            </DataTemplate>
+            <DataTemplate x:Key="ListViewItemTemplateProcessed">
+                <listView:ListViewTemplateCell>
+                    <listView:ListViewTemplateCell.View>
+                        <Grid Margin="16">
+                            <Label Grid.Row="0" FontAttributes="Bold" TextColor="Black" Text="{Binding LicenseDate}" />
+                            <Label Grid.Row="1" Text="{Binding EarningID}" />
+                            <Label Grid.Row="2">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding RequestedHours}"></Span>
+                                        <Span Text=" Total hours"></Span>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Grid.Row="3" IsVisible="{Binding Approved}" FontAttributes="Bold" TextColor="#73c08c" Text="{Binding Status}" />
+                            <Label Grid.Row="3" IsVisible="{Binding Denied}" FontAttributes="Bold" TextColor="Red" Text="{Binding Status}" />
+                        </Grid>
+                    </listView:ListViewTemplateCell.View>
+                </listView:ListViewTemplateCell>
+            </DataTemplate>
+            <OnPlatform x:TypeArguments="x:Double" x:Key="Height">
+                <On Platform="Android" Value="45" />
+                <On Platform="iOS" Value="36" />
+                <On Platform="UWP" Value="32" />
+            </OnPlatform>
+            <OnPlatform x:TypeArguments="x:Double" x:Key="Spacing">
+                <On Platform="Android" Value="10" />
+                <On Platform="iOS" Value="10" />
+                <On Platform="UWP" Value="10" />
+            </OnPlatform>
+            <GridLength x:Key="ButtonWidth">70</GridLength>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Shell.TitleView>
+        <Grid Style="{StaticResource TitleViewGrid }" ColumnDefinitions="Auto,Auto" RowDefinitions="Auto">
+            <Label Grid.Column="2" Grid.Row="0" Style="{StaticResource HeaderTitleContent }" Text="{Binding Title}"></Label>
+            <ImageButton Grid.Column="2" Grid.Row="0" HorizontalOptions="End" Style="{StaticResource NavBarIcon}" x:Name="imgBtnLogo" Source="CompanyIcon.png" />
+        </Grid>
+    </Shell.TitleView>
+
+    <ScrollView>
+        <StackLayout Style="{StaticResource StackContent }" Margin="0,5,0,0">
+
+            <Frame CornerRadius="15" BorderColor="{StaticResource SystemGray4}" Padding="15,15,15,10" Margin="10,4,10,5">
+
+                <StackLayout>
+
+                    <Grid ColumnDefinitions="0.4*,0.7* " RowDefinitions=" 40,40,40,40" Padding="0,5,0,10">
+                        <Label Text="From:" FontSize="16" Grid.Column="0" Grid.Row="0" VerticalTextAlignment="Center"></Label>
+                        <DatePicker Date="{Binding LicenseRequest.RequestDateFrom}" Grid.Column="1" Grid.Row="0"></DatePicker>
+
+                        <Label Text="To:" FontSize="16" Grid.Column="0" Grid.Row="1" VerticalTextAlignment="Center"></Label>
+                        <DatePicker Date="{Binding LicenseRequest.RequestDateTo}" Grid.Column="1" Grid.Row="1"></DatePicker>
+
+                        <Label Text="Hours:" FontSize="16" Grid.Column="0" Grid.Row="2" VerticalTextAlignment="Center"></Label>
+                        <Entry Grid.Row="2" Grid.Column="1" Text="{Binding LicenseRequest.RequestHours}"></Entry>
+
+                        <Label Text="License:" FontSize="16" Grid.Column="0" Grid.Row="3" VerticalTextAlignment="Center"></Label>
+
+                        <Picker x:Name="LicensePicker" Grid.Column="1" Grid.Row="3" Title="Select License" Margin="0" ItemsSource="{Binding LicenseDropDownList}" ItemDisplayBinding="{Binding EID}" SelectedItem="{Binding SelectedTimeIndex,Mode=TwoWay}">
+                            <Picker.Behaviors>
+                                <xct:EventToCommandBehavior EventName="SelectedIndexChanged" Command="{Binding LicensesChangedCommand }" CommandParameter="{Reference LicensePicker}" />
+                            </Picker.Behaviors>
+                        </Picker>
+                        <!--
+                        <telerikInput:RadComboBox x:Name="rcbLicenseRequestEarnings" Grid.Column="1" Grid.Row="3" ItemsSource="{Binding LicenseDropDownList}" SelectedIndex="{Binding SelectedTimeIndex, Mode=TwoWay}" SelectedItem="{Binding SelectedLicenseRequest}" DisplayMemberPath="EID" SearchTextPath="Description" IsEditable="True" SelectionMode="Single" WidthRequest="280" CornerRadius="0" HorizontalOptions="StartAndExpand">
+                            <telerikInput:RadComboBox.HeaderTemplate>
+                                <DataTemplate>
+                                    <Frame BackgroundColor="{StaticResource AlChavoBlue}" VerticalOptions="CenterAndExpand">
+                                        <Label Text="Select license" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource WindowBackgroundColorLight   }" />
+                                    </Frame>
+                                </DataTemplate>
+                            </telerikInput:RadComboBox.HeaderTemplate>
+                            <telerikInput:RadComboBox.Behaviors>
+                                <behaviorsPack:EventToCommandBehavior EventName="SelectionChanged" Command="{Binding LicensesChangedCommand }" CommandParameter="{Reference rcbLicenseRequestEarnings}" />
+                            </telerikInput:RadComboBox.Behaviors>
+                        </telerikInput:RadComboBox>
+                        -->
+                    </Grid>
+
+                    <Button Style="{StaticResource BlueBtn}" Margin="20,10,20,10" Command="{Binding RequestTimeOffCommand}" CornerRadius="25" Text="REQUEST TIME OFF" />
+
+                </StackLayout>
+            </Frame>
+
+            <Frame CornerRadius="15" BorderColor="{StaticResource SystemGray4}" Padding="15,15,15,10" Margin="10,4,10,5">
+
+                <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="StartAndExpand" Orientation="Vertical">
+
+                    <Grid RowDefinitions="auto" ColumnDefinitions="1*,1*">
+
+                        <StackLayout Grid.Column="0" Grid.Row="0" x:Name="PendingStack">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding TapPendingCommand}" />
+                            </StackLayout.GestureRecognizers>
+                            <Label FontAttributes="{Binding pendingFontAttributes}" Text="{Binding Path=BindingContext.pendingTitle,Source={x:Reference TimeOffPage} }"></Label>
+                            <BoxView Color="{Binding pendingColorAttributes}" Style="{StaticResource BoxViewSeparator }" />
+                        </StackLayout>
+
+                        <StackLayout Grid.Column="1" Grid.Row="0" x:Name="ProcessedStack">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding TapProcessedCommand}" />
+                            </StackLayout.GestureRecognizers>
+                            <Label FontAttributes="{Binding processedFontAttributes}" Text="{Binding Path=BindingContext.processedTitle,Source={x:Reference TimeOffPage} }"></Label>
+                            <BoxView Color="{Binding processedColorAttributes}" Style="{StaticResource BoxViewSeparator }" />
+                        </StackLayout>
+                    </Grid>
+
+                    <StackLayout IsVisible="{Binding isVisiblePending}" x:Name="PendingList" BindableLayout.ItemsSource="{Binding licensePendingRequestList}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+
+                                <StackLayout Orientation="Horizontal" Margin="5,10">
+                                    <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand">
+                                        <Label IsVisible="false" Text="{Binding ID}"></Label>
+                                        <Label FontAttributes="Bold" Text="{Binding LicenseDate}" Style="{StaticResource ListTitle}" />
+                                        <Label Text="{Binding EarningID}" />
+                                        <Label>
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding RequestedHours}"></Span>
+                                                    <Span Text=" Total hours"></Span>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+
+                                    </StackLayout>
+                                    <StackLayout>
+                                        <ImageButton Grid.Row="3" CommandParameter="{Binding .}" Command="{Binding Path=BindingContext.DeleteRequestTimeOffCommand,Source={x:Reference TimeOffPage} }" BackgroundColor="Transparent" Source="Trashicon.png"></ImageButton>
+
+                                    </StackLayout>
+                                </StackLayout>
+
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+
+                    <StackLayout IsVisible="{Binding isVisibleProcess}" x:Name="ProcessList" BindableLayout.ItemsSource="{Binding licenseProcessedRequestList}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Orientation="Horizontal" Margin="5,10">
+                                    <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand">
+                                        <Label FontAttributes="Bold" TextColor="Black" Text="{Binding LicenseDate}" />
+                                        <Label Text="{Binding EarningID}" />
+                                        <Label>
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding RequestedHours}"></Span>
+                                                    <Span Text=" Total hours"></Span>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                    </StackLayout>
+                                    <StackLayout VerticalOptions="Start">
+                                        <Label IsVisible="{Binding Approved}" FontAttributes="Bold" TextColor="#73c08c" Text="{Binding Status}" />
+                                        <Label IsVisible="{Binding Denied}" FontAttributes="Bold" TextColor="Red" Text="{Binding Status}" />
+                                    </StackLayout>
+                                </StackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+
+                </StackLayout>
+            </Frame>
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

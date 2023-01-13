@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:telerikPdfViewer="clr-namespace:Telerik.XamarinForms.PdfViewer;assembly=Telerik.XamarinForms.PdfViewer" x:Class="AlChavoMobilePayroll.Views.Attendance.TimeOffReportDetail" Shell.TabBarIsVisible="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ControlTemplate x:Key="HeaderControlTemplate">
+                <StackLayout Padding="0,5,0,10" Margin="3">
+                    <StackLayout>
+                        <Frame Style="{StaticResource TabViewItemHdr}">
+                            <Label Text="{TemplateBinding Text}" FontSize="17" TextColor="{StaticResource AlChavoBlue }" FontAttributes="Bold" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" />
+                        </Frame>
+                    </StackLayout>
+                    <BoxView IsVisible="{TemplateBinding IsSelected}" BackgroundColor="#1673C3" VerticalOptions="End" HeightRequest="5" />
+                </StackLayout>
+            </ControlTemplate>
+        </ResourceDictionary>
+
+    </ContentPage.Resources>
+
+    <Shell.TitleView>
+        <Grid Style="{StaticResource TitleViewGrid }" ColumnDefinitions="Auto,Auto" RowDefinitions="Auto">
+            <Label Grid.Column="2" Grid.Row="0" Style="{StaticResource HeaderTitleContent }" Text="{Binding Title}"></Label>
+            <ImageButton Grid.Column="2" Grid.Row="0" HorizontalOptions="End" Style="{StaticResource NavBarIcon}" x:Name="imgBtnLogo" Source="CompanyIcon.png" />
+        </Grid>
+    </Shell.TitleView>
+
+    <StackLayout Style="{StaticResource StackContent }">
+        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <telerikPdfViewer:RadPdfViewer x:Name="pdfViewer" Source="{Binding paTimeOffViewReport}" BackgroundColor="{StaticResource SystemGray4 }"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"  Margin="0" Padding="0"></telerikPdfViewer:RadPdfViewer>
+        </StackLayout>
+
+    </StackLayout>
+</ContentPage>

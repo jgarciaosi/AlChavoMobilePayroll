@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:telerikInput="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input" x:Class="AlChavoMobilePayroll.Views.Attendance.TimeOffReport">
+
+    <Shell.TitleView>
+        <Grid Style="{StaticResource TitleViewGrid }" ColumnDefinitions="Auto,Auto" RowDefinitions="Auto">
+            <Label Grid.Column="2" Grid.Row="0" Style="{StaticResource HeaderTitleContent }" Text="{Binding Title}"></Label>
+            <ImageButton Grid.Column="2" Grid.Row="0" HorizontalOptions="End" Style="{StaticResource NavBarIcon}" x:Name="imgBtnLogo" Source="CompanyIcon.png" />
+        </Grid>
+    </Shell.TitleView>
+
+    <StackLayout Style="{StaticResource StackContent }" Margin="0,5,0,0" VerticalOptions="Start">
+        <Frame Style="{StaticResource FrmBasic}" Padding="2" Margin="10,15" HasShadow="False">
+
+            <StackLayout Padding="15,15,15,10" Margin="10,4,10,5" Orientation="Vertical">
+
+                <Label Text="From:" FontSize="16" VerticalTextAlignment="Center"></Label>
+                <DatePicker Date="{Binding dateFrom,Mode=TwoWay}"></DatePicker>
+
+                <Label Text="To:" FontSize="16" VerticalTextAlignment="Center"></Label>
+                <DatePicker Date="{Binding dateTo,Mode=TwoWay}"></DatePicker>
+
+                <Button Style="{StaticResource BlueBtn}" Margin="20" CornerRadius="25" Text="Search" Command="{Binding GoToTimeOffViewReportCommand}" />
+
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+
+</ContentPage>

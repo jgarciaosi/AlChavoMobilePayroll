@@ -1,0 +1,317 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AlChavoMobilePayroll.App"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit" xmlns:chart="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms">
+    <!--
+        Define global resources and styles here, that apply to all pages in your app.
+    -->
+    <Application.Resources>
+        <ResourceDictionary>
+           
+
+            <Color x:Key="AlChavoBlue">#1673C3</Color>
+            <Color x:Key="AlChavoBlueTwo">#145496</Color>
+            <Color x:Key="AlChavoBlueThree">#319FF9</Color>
+            <Color x:Key="AlChavoDarkBlue">#051c3d</Color>
+
+            <Color x:Key="AlChavoWarning">#eb6a00</Color>
+
+            <Color x:Key="SystemGray">#8E8E93</Color>
+            <Color x:Key="SystemGray2">#AEAEB2</Color>
+            <Color x:Key="SystemGray3">#C7C7CC</Color>
+            <Color x:Key="SystemGray4">#D1D1D6</Color>
+            <Color x:Key="SystemGray5">#E5E5EA</Color>
+            <Color x:Key="SystemGray6">#F2F2F7</Color>
+            
+            <Color x:Key="Primary">#2196F3</Color>
+            <Color x:Key="AlchavoBlueTitle">#279ad4</Color>
+            <Color x:Key="AlchavoBlueLine">#34a0d6</Color>            
+         
+            <Color x:Key="ShadowColor">Gray</Color>
+            <Color x:Key="ShadowColor2">#C7C7CC</Color>
+
+            <!--Colores Fondo de App-->
+            <Color x:Key="WindowBackgroundColorLight">#ffffff</Color>
+            <Color x:Key="WindowBackgroundColorDark">#121212</Color>
+
+            <Color x:Key="WindowForegroundColorLight">#17617b</Color>
+            <Color x:Key="WindowForegroundColorDark">#ffffff</Color>
+
+            <!--Frame-->
+            <Color x:Key="FrameBackgroundColorLight">#ffffff</Color>
+            <Color x:Key="FrameBackgroundColorDark">#2a2a2a</Color>
+
+            <Color x:Key="FrameForListViewBackgroundColorLight">#ffffff</Color>
+            <Color x:Key="FrameForListViewBackgroundColorDark">#1C1C1C</Color>
+
+            <Color x:Key="FrameForSearchBackgroundColorLight">#Dcdcdc</Color>
+            <Color x:Key="FrameForSearchBackgroundColorDark">#4D4E4E</Color>
+
+            <Color x:Key="FrameForTabHdrBackgroundColorLight">LightGray</Color>
+            <Color x:Key="FrameForTabHdrBackgroundColorDark">#Ececec</Color>
+
+            <Color x:Key="FrameBorderColorLight">Default</Color>
+            <Color x:Key="FrameBorderColorDark">#5A5C60</Color>
+
+            <Style TargetType="Grid" x:Key="TitleViewGrid">
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"></Setter>
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"></Setter>
+                <Setter Property="Padding" Value="0,10,0,0"></Setter>
+            </Style>
+            <Style TargetType="ImageButton" x:Key="NavBarIcon">
+                <Setter Property="HorizontalOptions" Value="End"></Setter>
+                <Setter Property="VerticalOptions" Value="Start"></Setter>
+                <Setter Property="BackgroundColor" Value="Transparent"></Setter>
+                <Setter Property="HeightRequest" Value="30"></Setter>
+                <Setter Property="Margin" Value="3,0,3,0"></Setter>
+            </Style>
+            <Style TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource FrameBackgroundColorDark }, Light={StaticResource FrameBackgroundColorLight }}"></Setter>
+                <Setter Property="HasShadow" Value="False" />
+            </Style>
+            <Style TargetType="Switch">
+                <Setter Property="OnColor" Value="{StaticResource AlChavoBlueThree }"></Setter>
+            </Style>
+            
+            <Style TargetType="Button">
+                <Setter Property="TextColor" Value="White"></Setter>
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#332196F3" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+            <!-- Grafico -->
+            <chart:ChartColorCollection x:Key="Colors">
+                <Color>#FE1835</Color>
+                <Color>#3abf5a</Color>
+                <Color>#2EC9FF</Color>
+                <Color>#0167B9</Color>
+            </chart:ChartColorCollection>
+          
+          
+            <!-- Grafico -->
+
+            <Style TargetType="Label" x:Key="ListTitle">
+                <Setter Property="HorizontalOptions" Value="StartAndExpand"></Setter>
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"></Setter>
+                <Setter Property="FontSize" Value="17.5"></Setter>
+                <Setter Property="TextColor" Value="{StaticResource AlChavoBlue}"></Setter>
+                <Setter Property="FontAttributes" Value="Bold"></Setter>
+                <Setter Property="Margin" Value="0"></Setter>
+
+            </Style>
+
+            <Style TargetType="Label" x:Key="ListDtl1">
+                <Setter Property="HorizontalOptions" Value="StartAndExpand"></Setter>
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"></Setter>
+                <Setter Property="FontSize" Value="16"></Setter>
+                <Setter Property="FontAttributes" Value="Bold"></Setter>
+            </Style>
+
+            <Style TargetType="Label" x:Key="ListDtl2">
+                <Setter Property="FontSize" Value="15"></Setter>
+                <Setter Property="HorizontalOptions" Value="StartAndExpand"></Setter>
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"></Setter>
+            </Style>
+
+            <!--Style Global de StackLayout para content -->
+            <Style TargetType="StackLayout" x:Key="StackContent">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource WindowBackgroundColorDark }, Light={StaticResource WindowBackgroundColorLight }}"></Setter>
+                <Setter Property="VerticalOptions" Value="FillAndExpand"></Setter>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"></Setter>
+            </Style>
+
+            <!--Style Basico de Search Frame Global-->
+            <Style TargetType="Frame" x:Key="SearchFrmBasic">
+                <Setter Property="VerticalOptions" Value="FillAndExpand"></Setter>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"></Setter>
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource FrameForSearchBackgroundColorDark }, Light={StaticResource FrameForSearchBackgroundColorLight }}"></Setter>
+                <Setter Property="BorderColor" Value="{AppThemeBinding Dark={StaticResource FrameForSearchBackgroundColorDark }, Light={StaticResource FrameForSearchBackgroundColorLight }}"></Setter>
+                <Setter Property="Padding" Value="5,0,5,0"></Setter>
+                <Setter Property="Margin" Value="20,10,20,5"></Setter>
+                <Setter Property="CornerRadius" Value="20"></Setter>
+                <Setter Property="HeightRequest" Value="45"></Setter>
+
+            </Style>
+
+            <!--Style Basico de CollectionView Global-->
+            <Style TargetType="CollectionView" x:Key="CollectionViewBasic">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource WindowBackgroundColorDark    }, Light={StaticResource WindowBackgroundColorLight   }}"></Setter>
+                <Setter Property="VerticalScrollBarVisibility" Value="Never"></Setter>
+                <Setter Property="SelectionMode" Value="Single"></Setter>
+                <Setter Property="Margin" Value="5"></Setter>
+
+            </Style>
+
+            <Style TargetType="Button" x:Key="LoginBtn">
+                <Setter Property="BackgroundColor" Value="{StaticResource AlChavoBlue}" />
+                <Setter Property="BorderWidth" Value="0" />
+                <Setter Property="Text" Value="LOGIN" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="Margin" Value="0,30,0,40" />
+                <Setter Property="CornerRadius" Value="20" />
+                <Setter Property="WidthRequest" Value="300" />
+                <Setter Property="xct:ShadowEffect.Color" Value="{StaticResource ShadowColor }" />
+
+                <Setter Property="xct:ShadowEffect.OffsetY" Value="8" />
+                <Setter Property="xct:ShadowEffect.OffsetX" Value="8" />
+                <Setter Property="xct:ShadowEffect.Opacity" Value="10" />
+                <Setter Property="xct:ShadowEffect.Radius" Value="8" />
+            </Style>
+
+            <Style TargetType="Button" x:Key="BlueBtn">
+                <Setter Property="BackgroundColor" Value="{StaticResource AlChavoBlue}" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="CornerRadius" Value="20" />
+                <Setter Property="Margin" Value="0" />
+
+                <Setter Property="xct:ShadowEffect.Color" Value="{StaticResource AlChavoDarkBlue }" />
+                <Setter Property="xct:ShadowEffect.OffsetY" Value="2" />
+                <Setter Property="xct:ShadowEffect.Radius" Value="3" />
+
+            </Style>
+            <Style TargetType="Button" x:Key="GrayBtn">
+                <Setter Property="BackgroundColor" Value="{StaticResource SystemGray2}" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="CornerRadius" Value="20" />
+                <Setter Property="Margin" Value="0" />
+
+                <Setter Property="xct:ShadowEffect.Color" Value="{StaticResource AlChavoDarkBlue }" />
+                <Setter Property="xct:ShadowEffect.OffsetY" Value="2" />
+                <Setter Property="xct:ShadowEffect.Radius" Value="3" />
+
+            </Style>
+            <Style TargetType="ImageButton"  x:Key="arrowLeft">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="Source" Value="less_than.png" />
+                <Setter Property="Padding" Value="5" />
+            </Style>
+           
+            <Style TargetType="ImageButton" x:Key="arrowRight">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="Source" Value="greater_than.png" />
+                <Setter Property="Padding" Value="5" />
+            </Style>
+
+           
+
+            <Style TargetType="BoxView" x:Key="BoxViewSeparator">
+                <Setter Property="Color" Value="#eeeeee"></Setter>
+               
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"></Setter>
+                <Setter Property="HeightRequest" Value="1"></Setter>
+                <Setter Property="Margin" Value="0"></Setter>
+            </Style>
+            <Style TargetType="BoxView" x:Key="FormSeparatorBoxViewStyle">
+                <Setter Property="Color" Value="{StaticResource AlChavoBlueThree  }"></Setter>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"></Setter>
+                <Setter Property="HeightRequest" Value="1"></Setter>
+                <Setter Property="Margin" Value="0"></Setter>
+            </Style>
+
+            <Style TargetType="StackLayout" x:Key="StackHeaderContent">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource WindowBackgroundColorDark }, Light={StaticResource WindowBackgroundColorLight }}"></Setter>
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"></Setter>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"></Setter>
+                <Setter Property="Orientation" Value="Horizontal"></Setter>
+                <Setter Property="Padding" Value="5"></Setter>
+                <Setter Property="HeightRequest" Value="20"></Setter>
+            </Style>
+
+            <Style TargetType="Label" x:Key="HeaderTitleContent">
+                <Setter Property="TextColor" Value="{StaticResource AlChavoBlue }"></Setter>
+                <Setter Property="BackgroundColor"  Value="Transparent"></Setter>
+                <Setter Property="FontSize" Value="20"></Setter>
+                <Setter Property="FontAttributes" Value="Bold"></Setter>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"></Setter>
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"></Setter>
+                <Setter Property="VerticalTextAlignment" Value="End"></Setter>
+
+            </Style>
+
+            <Style TargetType="Image" x:Key="HeaderImageTitleContent">
+                <Setter Property="BackgroundColor" Value="Transparent"></Setter>
+                <Setter Property="Source" Value="CompanyIconHeader.png"></Setter>
+                <Setter Property="HorizontalOptions" Value="End"></Setter>
+                <Setter Property="VerticalOptions" Value="Center"></Setter>
+            </Style>
+
+            <!--Style Basico de Frame Global-->
+            <Style TargetType="Frame" x:Key="FrmBasic">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource FrameBackgroundColorDark  }, Light={StaticResource FrameBackgroundColorLight }}"></Setter>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"></Setter>
+                <Setter Property="VerticalOptions" Value="FillAndExpand"></Setter>
+
+                <Setter Property="BorderColor" Value="{AppThemeBinding Dark={StaticResource FrameBackgroundColorDark  }, Light={StaticResource FrameBackgroundColorLight }}"></Setter>
+                <Setter Property="Padding" Value="15,15,15,10"></Setter>
+                <Setter Property="CornerRadius" Value="20"></Setter>
+                <Setter Property="Margin" Value="10,4,10,5"></Setter>
+
+
+                <Setter Property="xct:ShadowEffect.Color" Value="{StaticResource ShadowColor }" />
+                <Setter Property="xct:ShadowEffect.OffsetY" Value="0" />
+                <Setter Property="xct:ShadowEffect.OffsetX" Value=".9" />
+                <Setter Property="xct:ShadowEffect.Opacity" Value="50" />
+                <Setter Property="xct:ShadowEffect.Radius" Value="4" />
+
+            </Style>
+            <Style TargetType="Frame" x:Key="SearchFrm">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource FrameBackgroundColorDark  }, Light={StaticResource FrameBackgroundColorLight }}"></Setter>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"></Setter>
+                <Setter Property="VerticalOptions" Value="StartAndExpand"></Setter>
+
+                <Setter Property="BorderColor" Value="{AppThemeBinding Dark={StaticResource FrameBackgroundColorDark  }, Light={StaticResource SystemGray4 }}"></Setter>
+                <Setter Property="Padding" Value="5"></Setter>
+                <Setter Property="CornerRadius" Value="20"></Setter>
+                <Setter Property="Margin" Value="10,4"></Setter>
+                <Setter Property="HasShadow" Value="false"></Setter>
+
+            </Style>
+         
+            
+            <Style TargetType="Frame" x:Key="ListItemFrm">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource FrameBackgroundColorDark  }, Light={StaticResource FrameBackgroundColorLight }}"></Setter>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"></Setter>
+                <Setter Property="VerticalOptions" Value="FillAndExpand"></Setter>
+
+                <Setter Property="BorderColor" Value="{AppThemeBinding Dark={StaticResource FrameBackgroundColorDark  }, Light={StaticResource SystemGray4 }}"></Setter>
+                <Setter Property="Padding" Value="15"></Setter>
+                <Setter Property="CornerRadius" Value="20"></Setter>
+                <Setter Property="Margin" Value="10,4"></Setter>
+
+               
+            </Style>
+
+            <!--Style Globales de Warnings-->
+            <Style x:Key="InvalidEntryStyle" TargetType="Entry">
+                <Setter Property="TextColor" Value="{StaticResource AlChavoWarning }" />
+            </Style>
+
+            <Style x:Key="ValidationLabelInfo" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="EndAndExpand" />
+                <Setter Property="TextColor" Value="{StaticResource AlChavoWarning }" />
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="VerticalTextAlignment" Value="End" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="Padding" Value="0" />
+            </Style>
+            <!--=============================================================== -->
+        </ResourceDictionary>        
+    </Application.Resources>
+</Application>

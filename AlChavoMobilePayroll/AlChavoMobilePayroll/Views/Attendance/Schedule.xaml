@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:telerikInput="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input" xmlns:behaviorsPack="http://xamarin.com/schemas/2020/toolkit" x:Class="AlChavoMobilePayroll.Views.Attendance.Schedule">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label" x:Key="FirstPunchDate">
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"></Setter>
+                <Setter Property="VerticalOptions" Value="FillAndExpand"></Setter>
+                <Setter Property="FontAttributes" Value="Bold"></Setter>
+                <Setter Property="FontSize" Value="18"></Setter>
+                <Setter Property="TextColor" Value="{StaticResource AlChavoBlueTwo }"></Setter>
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Shell.TitleView>
+        <Grid Style="{StaticResource TitleViewGrid }" ColumnDefinitions="Auto,Auto" RowDefinitions="Auto">
+            <Label Grid.Column="2" Grid.Row="0" Style="{StaticResource HeaderTitleContent }" Text="{Binding Title}"></Label>
+            <ImageButton Grid.Column="2" Grid.Row="0" HorizontalOptions="End" Style="{StaticResource NavBarIcon}" x:Name="imgBtnLogo" Source="CompanyIcon.png" />
+        </Grid>
+    </Shell.TitleView>
+    <StackLayout>
+
+        <StackLayout>
+            <Frame Style="{StaticResource SearchFrm}">
+                <Grid Margin="10" RowDefinitions="40" ColumnDefinitions="1.5*,7*,1.5*">
+                    <ImageButton Grid.Column="0" Grid.Row="0" Command="{Binding IPreviousPeriodCommand}" Style="{StaticResource arrowLeft }"></ImageButton>
+                    <telerikInput:RadComboBox Grid.Column="1" Grid.Row="0" x:Name="rcbPeriods" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" ItemsSource="{Binding schedulePeriodsList}" DisplayMemberPath="PeriodDisplay" SelectionMode="Single" WidthRequest="250" CornerRadius="0" HorizontalOptions="StartAndExpand">
+                        <telerikInput:RadComboBox.Behaviors>
+                            <behaviorsPack:EventToCommandBehavior EventName="SelectionChanged" Command="{Binding PeriodsChangedCommand }" CommandParameter="{Reference rcbPeriods}" />
+                        </telerikInput:RadComboBox.Behaviors>
+                    </telerikInput:RadComboBox>
+                    <ImageButton Grid.Column="2" Grid.Row="0" Command="{Binding INextPeriodCommand}" Style="{StaticResource arrowRight}"></ImageButton>
+                </Grid>
+            </Frame>
+
+            <ListView HorizontalOptions="FillAndExpand" SelectionMode="None" Margin="10" HasUnevenRows="True" VerticalOptions="StartAndExpand" ItemsSource="{Binding scheduleList}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+
+                            <StackLayout>
+
+                                <StackLayout IsVisible="{Binding IsVisibleHeader}" Margin="10,10,10,10" Orientation="Vertical">
+                                    <Label Style="{StaticResource FirstPunchDate}" Text="{Binding FirstPunchDate, StringFormat='{0:dddd, dd MMMM yyyy}'}"></Label>
+                                    <BoxView Style="{StaticResource BoxViewSeparator }"></BoxView>
+                                </StackLayout>
+
+                                <StackLayout VerticalOptions="CenterAndExpand" Margin="10,10,35,10" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                                    <StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal">
+
+                                        <!--<Button TextColor="#4665C6" Padding="0.01" Margin="0.01" BorderColor="HotPink" FontSize="18" Text="{Binding PunchInHour, StringFormat='{0:H:mm tt}'}" BackgroundColor="White" ></Button>
+                                                <Button TextColor="#4665C6" Padding="0.01" Margin="0.01" BorderColor="HotPink" FontSize="18" Text="{Binding PunchOutHour, StringFormat='{0:H:mm tt}'}"  BackgroundColor="White"></Button>-->
+
+                                        <Label x:Name="LblPunchIn" HorizontalTextAlignment="End" TextDecorations="Underline" FontSize="18" Text="{Binding FirstPunchHour, StringFormat='{0:H:mm tt}'}" HorizontalOptions="Start" VerticalOptions="EndAndExpand" />
+
+                                        <Label TextDecorations="Underline" x:Name="LblPunchOut" HorizontalTextAlignment="End" HorizontalOptions="Start" FontSize="18" Text="{Binding SecondPunchHour, StringFormat='{0:H:mm tt}'}" />
+
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                        <Label HorizontalTextAlignment="End" HorizontalOptions="End" FontSize="18" Text="{Binding DurationTime}"></Label>
+                                    </StackLayout>
+                                </StackLayout>
+
+                            </StackLayout>
+
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+
+        </StackLayout>
+
+    </StackLayout>
+
+</ContentPage>

@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="AlChavoMobilePayroll.Views.CheckRegister.CheckRegisterIndex" xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms" xmlns:chart="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms" Title="{Binding Title}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label" x:Key="LblValues">
+                <Setter Property="HorizontalOptions" Value="EndAndExpand"></Setter>
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"></Setter>
+                <Setter Property="FontSize" Value="18"></Setter>
+                <Setter Property="FontAttributes" Value="Bold"></Setter>
+            </Style>
+        <chart:ChartColorCollection x:Key="Colors">
+                <Color>#d9d9d9</Color>
+                <Color>#3abf5a</Color>    
+        </chart:ChartColorCollection>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Shell.TitleView>
+        <Grid Style="{StaticResource TitleViewGrid }" ColumnDefinitions="Auto,Auto" RowDefinitions="Auto">
+            <Label Grid.Column="2" Grid.Row="0" Style="{StaticResource HeaderTitleContent }" Text="{Binding Title}"></Label>
+            <ImageButton Grid.Column="2" Grid.Row="0" HorizontalOptions="End" Style="{StaticResource NavBarIcon}" x:Name="imgBtnLogo" Source="CompanyIcon.png" />
+        </Grid>
+    </Shell.TitleView>
+    <ScrollView>
+        <StackLayout Style="{StaticResource StackContent }" Margin="0,5,0,0">
+
+            <StackLayout Padding="15,15,15,10" Margin="10,4,10,5">
+                <StackLayout>
+
+                    <Grid ColumnDefinitions="0.4*,0.7* " RowDefinitions=" 40,40" Padding="0,5,0,10">
+                        <Label Text="From:" FontSize="16" Grid.Column="0" Grid.Row="0" VerticalTextAlignment="Center"></Label>
+                        <DatePicker Grid.Column="1" Date="{Binding checkDateFrom}" Grid.Row="0"></DatePicker>
+
+                        <Label Text="To:" FontSize="16" Grid.Column="0" Grid.Row="1" VerticalTextAlignment="Center"></Label>
+                        <DatePicker Grid.Column="1" Date="{Binding checkDateTo}" Grid.Row="1"></DatePicker>
+                    </Grid>
+
+                    <Button Style="{StaticResource BlueBtn}" Margin="20,10,20,10" CornerRadius="25" Text="Search"  Command="{Binding GetCheckRegisterListCommand}"/>
+                    <!--Command="{Binding GetCheckRegisterListCommand}"-->
+                </StackLayout>
+            </StackLayout>
+           
+            <BoxView Style="{StaticResource FormSeparatorBoxViewStyle  }" Margin="0,10,0,20"></BoxView>
+            <!--<CollectionView ItemsSource="{Binding getAllBillRegisterResponse}" SelectionMode="Single" VerticalScrollBarVisibility="Never" SelectedItem="{Binding SelectedBill}" SelectionChangedCommand="{Binding GoToOpenBillDetailCommand}">-->
+            <CollectionView ItemsSource="{Binding checkRegisterList}" SelectedItem="{Binding SelectedCheckRegister}" SelectionChangedCommand="{Binding GoCheckRegisterDetailCommand}" Style="{StaticResource CollectionViewBasic }">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <Frame Style="{StaticResource ListItemFrm }" VerticalOptions="StartAndExpand" Margin="5" BorderColor="{StaticResource SystemGray4}" HasShadow="False">
+
+                                <Grid ColumnDefinitions="30*,70*,43*" RowDefinitions="25,25,25">
+
+                                    <chart:SfChart WidthRequest="190" ChartPadding="0"  Grid.Column="0" Grid.RowSpan="3" Grid.Row="0" HeightRequest="60">
+                                        <chart:SfChart.Series>
+                                            <chart:DoughnutSeries ItemsSource="{Binding CheckRegisterIndexPieData}" XBindingPath="TitlePie" YBindingPath="ValuePie" LegendIcon="Circle" EnableAnimation="true" StrokeWidth="1" StrokeColor="White" ExplodeOnTouch="False" EnableDataPointSelection="true">
+                                                <chart:DoughnutSeries.DataMarker>
+                                                    <chart:ChartDataMarker ShowLabel="False">                                                        
+                                                    </chart:ChartDataMarker>
+                                                </chart:DoughnutSeries.DataMarker>
+                                                <chart:DoughnutSeries.ColorModel>
+                                                    <chart:ChartColorModel Palette="Custom" CustomBrushes="{StaticResource Colors}" />
+                                                </chart:DoughnutSeries.ColorModel>                                               
+                                            </chart:DoughnutSeries>
+                                        </chart:SfChart.Series>
+
+                                    </chart:SfChart>
+
+                                    <Label Grid.Column="1" Grid.Row="0"   Text="{Binding CheckDate, StringFormat='{0:MMMM dd, yyyy}'}" FontSize="17" FontAttributes="Bold" HorizontalOptions="EndAndExpand" />
+
+                                    <Label Grid.Column="2"  Grid.Row="0" FontSize="17" FontAttributes="Bold" HorizontalOptions="EndAndExpand">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding CheckHours}"></Span>
+                                                <Span Text=" hours"></Span>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <Label Grid.Column="1" Grid.Row="1" Text="Net Pay:" FontSize="17" FontAttributes="Bold" HorizontalOptions="EndAndExpand" TextColor="DarkGray" />
+                                    <Label Grid.Column="1" Grid.Row="2" Text="Gross Pay:" FontSize="17" FontAttributes="Bold" HorizontalOptions="EndAndExpand" TextColor="DarkGray" />
+      
+                                    <Label Grid.Column="2" Grid.Row="1" Text="{Binding Net, StringFormat='{0:C}'}" FontSize="17" HorizontalOptions="EndAndExpand" />
+                                    <Label Grid.Column="2" Grid.Row="2" Text="{Binding Gross, StringFormat='{0:C}'}" FontSize="17" HorizontalOptions="EndAndExpand" />
+
+                                </Grid>
+                            </Frame>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>
